@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E8D7B2312A7A85A9003820D4 /* ReadBooks.docc in Sources */ = {isa = PBXBuildFile; fileRef = E8D7B2302A7A85A9003820D4 /* ReadBooks.docc */; };
 		E8D7B2372A7A85A9003820D4 /* ReadBooks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8D7B22C2A7A85A9003820D4 /* ReadBooks.framework */; };
-		E8D7B23C2A7A85A9003820D4 /* ReadBooksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D7B23B2A7A85A9003820D4 /* ReadBooksTests.swift */; };
-		E8D7B23D2A7A85A9003820D4 /* ReadBooks.h in Headers */ = {isa = PBXBuildFile; fileRef = E8D7B22F2A7A85A9003820D4 /* ReadBooks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,10 +22,7 @@
 
 /* Begin PBXFileReference section */
 		E8D7B22C2A7A85A9003820D4 /* ReadBooks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReadBooks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8D7B22F2A7A85A9003820D4 /* ReadBooks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadBooks.h; sourceTree = "<group>"; };
-		E8D7B2302A7A85A9003820D4 /* ReadBooks.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ReadBooks.docc; sourceTree = "<group>"; };
 		E8D7B2362A7A85A9003820D4 /* ReadBooksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReadBooksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8D7B23B2A7A85A9003820D4 /* ReadBooksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBooksTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +65,6 @@
 		E8D7B22E2A7A85A9003820D4 /* ReadBooks */ = {
 			isa = PBXGroup;
 			children = (
-				E8D7B22F2A7A85A9003820D4 /* ReadBooks.h */,
-				E8D7B2302A7A85A9003820D4 /* ReadBooks.docc */,
 			);
 			path = ReadBooks;
 			sourceTree = "<group>";
@@ -80,7 +72,6 @@
 		E8D7B23A2A7A85A9003820D4 /* ReadBooksTests */ = {
 			isa = PBXGroup;
 			children = (
-				E8D7B23B2A7A85A9003820D4 /* ReadBooksTests.swift */,
 			);
 			path = ReadBooksTests;
 			sourceTree = "<group>";
@@ -92,7 +83,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8D7B23D2A7A85A9003820D4 /* ReadBooks.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,7 +184,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8D7B2312A7A85A9003820D4 /* ReadBooks.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +191,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8D7B23C2A7A85A9003820D4 /* ReadBooksTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
