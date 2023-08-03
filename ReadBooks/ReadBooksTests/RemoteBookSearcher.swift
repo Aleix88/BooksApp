@@ -29,7 +29,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     // ARRANGE - ACT - ASSERT
     func test_init_noneRequestIsSent() {
         let client = HTTPClient.shared
-        let sut = RemoteBookSearcher()
+        _ = RemoteBookSearcher()
         
         XCTAssertNil(client.requestedURL)
     }
