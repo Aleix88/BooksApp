@@ -7,12 +7,13 @@
 
 import XCTest
 
-class HTTPClient {
-    static let shared = HTTPClient()
+protocol HTTPClient {
+    func get(url: URL)
+}
+
+class HTTPClientSpy: HTTPClient {
     var requestedURL: URL?
-    
-    private init() {}
-    
+
     func get(url: URL) {
         requestedURL = url
     }
@@ -37,14 +38,14 @@ final class RemoteBookSearcherTests: XCTestCase {
 
     // ARRANGE - ACT - ASSERT
     func test_init_noneRequestIsSent() {
-        let client = HTTPClient.shared
+        let client = HTTPClientSpy()
         _ = RemoteBookSearcher(client: client, url: URL(string: "https://www.some-url.com")!)
         
         XCTAssertNil(client.requestedURL)
     }
     
     func test_onSearch_requestIsSent() {
-        let client = HTTPClient.shared
+        let client = HTTPClientSpy()
         let sut = RemoteBookSearcher(client: client, url: URL(string: "https://www.some-url.com")!)
 
         sut.search(input: "")
