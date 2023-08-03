@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E87756052A7B6C47004511E6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756042A7B6C47004511E6 /* Book.swift */; };
 		E87756092A7B70E5004511E6 /* BookSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756082A7B70E5004511E6 /* BookSearcher.swift */; };
+		E877560B2A7B71BF004511E6 /* RemoteBookSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877560A2A7B71BF004511E6 /* RemoteBookSearcher.swift */; };
 		E8D7B2372A7A85A9003820D4 /* ReadBooks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8D7B22C2A7A85A9003820D4 /* ReadBooks.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		E87756042A7B6C47004511E6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		E87756082A7B70E5004511E6 /* BookSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearcher.swift; sourceTree = "<group>"; };
+		E877560A2A7B71BF004511E6 /* RemoteBookSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteBookSearcher.swift; sourceTree = "<group>"; };
 		E8D7B22C2A7A85A9003820D4 /* ReadBooks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReadBooks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8D7B2362A7A85A9003820D4 /* ReadBooksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReadBooksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -78,6 +80,7 @@
 		E8D7B23A2A7A85A9003820D4 /* ReadBooksTests */ = {
 			isa = PBXGroup;
 			children = (
+				E877560A2A7B71BF004511E6 /* RemoteBookSearcher.swift */,
 			);
 			path = ReadBooksTests;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E877560B2A7B71BF004511E6 /* RemoteBookSearcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
