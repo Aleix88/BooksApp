@@ -19,8 +19,17 @@ class HTTPClient {
 }
 
 class RemoteBookSearcher {
+    
+    let client: HTTPClient
+    let url: URL
+    
+    init(client: HTTPClient, url: URL) {
+        self.client = client
+        self.url = url
+    }
+    
     func search(input: String) {
-        HTTPClient.shared.get(url: URL(string: "https://www.some-url.com")!)
+        client.get(url: url)
     }
 }
 
@@ -29,15 +38,15 @@ final class RemoteBookSearcherTests: XCTestCase {
     // ARRANGE - ACT - ASSERT
     func test_init_noneRequestIsSent() {
         let client = HTTPClient.shared
-        _ = RemoteBookSearcher()
+        _ = RemoteBookSearcher(client: client, url: URL(string: "https://www.some-url.com")!)
         
         XCTAssertNil(client.requestedURL)
     }
     
     func test_onSearch_requestIsSent() {
         let client = HTTPClient.shared
-        let sut = RemoteBookSearcher()
-        
+        let sut = RemoteBookSearcher(client: client, url: URL(string: "https://www.some-url.com")!)
+
         sut.search(input: "")
         
         XCTAssertNotNil(client.requestedURL)
