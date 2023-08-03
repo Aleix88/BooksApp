@@ -6,31 +6,13 @@
 //
 
 import XCTest
-
-protocol HTTPClient {
-    func get(url: URL)
-}
+import ReadBooks
 
 class HTTPClientSpy: HTTPClient {
     var requestedURL: URL?
 
     func get(url: URL) {
         requestedURL = url
-    }
-}
-
-class RemoteBookSearcher {
-    
-    let client: HTTPClient
-    let url: URL
-    
-    init(client: HTTPClient, url: URL) {
-        self.client = client
-        self.url = url
-    }
-    
-    func search(input: String) {
-        client.get(url: url)
     }
 }
 
