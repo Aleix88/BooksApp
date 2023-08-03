@@ -9,11 +9,9 @@ import XCTest
 import ReadBooks
 
 class HTTPClientSpy: HTTPClient {
-    var requestedURL: URL?
     var requestedURLs = [URL]()
 
     func get(url: URL) {
-        requestedURL = url
         requestedURLs.append(url)
     }
 }
@@ -24,15 +22,16 @@ final class RemoteBookSearcherTests: XCTestCase {
     func test_init_noneRequestIsSent() {
         let (_, client) = makeSut()
         
-        XCTAssertNil(client.requestedURL)
+        XCTAssertEqual(client.requestedURLs, [])
     }
     
     func test_onSearch_requestIsSent() {
-        let (sut, client) = makeSut()
+        let url = URL(string: "https://www.some-url.com")!
+        let (sut, client) = makeSut(url: url)
 
         sut.search(input: "")
         
-        XCTAssertNotNil(client.requestedURL)
+        XCTAssertEqual(client.requestedURLs, [url])
     }
     
     func test_onSearchTwice_twoRequestAreSent() {
