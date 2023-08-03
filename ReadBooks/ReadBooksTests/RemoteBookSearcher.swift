@@ -12,9 +12,17 @@ class HTTPClient {
     var requestedURL: URL?
     
     private init() {}
+    
+    func get(url: URL) {
+        requestedURL = url
+    }
 }
 
-class RemoteBookSearcher {}
+class RemoteBookSearcher {
+    func search(input: String) {
+        HTTPClient.shared.get(url: URL(string: "https://www.some-url.com")!)
+    }
+}
 
 final class RemoteBookSearcherTests: XCTestCase {
 
@@ -24,6 +32,15 @@ final class RemoteBookSearcherTests: XCTestCase {
         let sut = RemoteBookSearcher()
         
         XCTAssertNil(client.requestedURL)
+    }
+    
+    func test_onSearch_requestIsSent() {
+        let client = HTTPClient.shared
+        let sut = RemoteBookSearcher()
+        
+        sut.search(input: "")
+        
+        XCTAssertNotNil(client.requestedURL)
     }
 
 }
