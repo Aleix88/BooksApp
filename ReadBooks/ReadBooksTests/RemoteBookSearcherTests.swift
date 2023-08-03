@@ -20,19 +20,23 @@ final class RemoteBookSearcherTests: XCTestCase {
 
     // ARRANGE - ACT - ASSERT
     func test_init_noneRequestIsSent() {
-        let client = HTTPClientSpy()
-        _ = RemoteBookSearcher(client: client, url: URL(string: "https://www.some-url.com")!)
+        let (_, client) = makeSut()
         
         XCTAssertNil(client.requestedURL)
     }
     
     func test_onSearch_requestIsSent() {
-        let client = HTTPClientSpy()
-        let sut = RemoteBookSearcher(client: client, url: URL(string: "https://www.some-url.com")!)
+        let (sut, client) = makeSut()
 
         sut.search(input: "")
         
         XCTAssertNotNil(client.requestedURL)
     }
 
+    // MARK: Helpers
+    func makeSut(urlString: String = "https://www.some-url.com") -> (RemoteBookSearcher, HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteBookSearcher(client: client, url: URL(string: urlString)!)
+        return (sut, client)
+    }
 }
