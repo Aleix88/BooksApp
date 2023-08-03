@@ -29,7 +29,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         let url = URL(string: "https://www.some-url.com")!
         let (sut, client) = makeSut(url: url)
 
-        sut.search(input: "")
+        sut.search(input: "Some book name")
         
         XCTAssertEqual(client.requestedURLs, [url])
     }
@@ -38,8 +38,8 @@ final class RemoteBookSearcherTests: XCTestCase {
         let url = URL(string: "https://www.some-url.com")!
         let (sut, client) = makeSut(url: url)
         
-        sut.search(input: "")
-        sut.search(input: "")
+        sut.search(input: "Some book name")
+        sut.search(input: "Another book name")
         
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
