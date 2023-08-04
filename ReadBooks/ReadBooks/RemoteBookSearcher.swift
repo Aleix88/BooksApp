@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol HTTPClient {
-    func get(url: URL)
+    func get(url: URL, completion: @escaping (Error) -> Void)
 }
 
 public protocol SearchURLAbstractFactory {
@@ -16,6 +16,10 @@ public protocol SearchURLAbstractFactory {
 }
 
 public class RemoteBookSearcher {
+    
+    public enum Error: Swift.Error {
+        case connectivity
+    }
     
     private let client: HTTPClient
     private let urlFactory: SearchURLAbstractFactory
@@ -25,10 +29,12 @@ public class RemoteBookSearcher {
         self.urlFactory = urlFactory
     }
     
-    public func search(input: String) {
+    public func search(input: String, completion: @escaping (Error) -> Void = { _ in }) {
         guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               let url = urlFactory.create(input: input)
         else { return }
-        client.get(url: url)
+        client.get(url: url) { _ in
+            completion(.connectivity)
+        }
     }
 }

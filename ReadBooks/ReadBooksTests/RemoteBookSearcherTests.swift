@@ -10,8 +10,10 @@ import ReadBooks
 
 class HTTPClientSpy: HTTPClient {
     var requestedURLs = [URL]()
+    var completions = [(Error) -> Void]()
 
-    func get(url: URL) {
+    func get(url: URL, completion: @escaping (Error) -> Void) {
+        completions.append(completion)
         requestedURLs.append(url)
     }
 }
@@ -80,6 +82,18 @@ final class RemoteBookSearcherTests: XCTestCase {
         sut.search(input: "Some book name")
         
         XCTAssertEqual(client.requestedURLs, [])
+    }
+    
+    func test_onSearch_deliversErrorOnClientError() {
+        let (sut, client) = makeSut()
+        
+        var sutError: RemoteBookSearcher.Error?
+        sut.search(input: "Some book name") { error in
+            sutError = error
+        }
+        client.completions[0](NSError(domain: "", code: 0))
+        
+        XCTAssertEqual(sutError, .connectivity)
     }
 
     // MARK: Helpers
