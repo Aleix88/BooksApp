@@ -32,13 +32,13 @@ final class RemoteBookSearcherTests: XCTestCase {
 
     // ARRANGE - ACT - ASSERT
     func test_init_noRequestIsSent() {
-        let (_, client, _) = makeSut()
+        let (_, client) = makeSut()
         
         XCTAssertEqual(client.requestedURLs, [])
     }
     
     func test_onSearchWithEmptyInput_noRequestIsSent() {
-        let (sut, client, _) = makeSut()
+        let (sut, client) = makeSut()
         
         sut.search(input: "")
         sut.search(input: "    ")
@@ -48,8 +48,9 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
     
     func test_onSearch_requestIsSent() {
-        let (sut, client, urlFactory) = makeSut()
-
+        let urlFactory = SearchURLFactoryMock()
+        let (sut, client) = makeSut(urlFactory: urlFactory)
+        
         sut.search(input: "Some book name")
         sut.search(input: "Another book name")
 
@@ -58,7 +59,8 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
     
     func test_onSearch_inputIsInjectedToURLFactory() {
-        let (sut, _, urlFactory) = makeSut()
+        let urlFactory = SearchURLFactoryMock()
+        let (sut, _) = makeSut(urlFactory: urlFactory)
         
         sut.search(input: "Some book name")
         
@@ -67,10 +69,9 @@ final class RemoteBookSearcherTests: XCTestCase {
 
     // MARK: Helpers
     
-    func makeSut(baseUrl: URL = URL(string: "https://www.some-url.com")!) -> (RemoteBookSearcher, HTTPClientSpy, SearchURLFactoryMock) {
+    func makeSut(urlFactory: SearchURLAbstractFactory = SearchURLFactoryMock()) -> (RemoteBookSearcher, HTTPClientSpy) {
         let client = HTTPClientSpy()
-        let urlFactory = SearchURLFactoryMock()
         let sut = RemoteBookSearcher(client: client, urlFactory: urlFactory)
-        return (sut, client, urlFactory)
+        return (sut, client)
     }
 }
