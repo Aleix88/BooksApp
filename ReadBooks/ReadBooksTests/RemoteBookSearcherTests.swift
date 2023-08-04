@@ -43,7 +43,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [])
     }
     
-    func test_onSearchWithEmptyInput_noRequestIsSent() {
+    func test_onSearchWithInvalidInput_noRequestIsSent() {
         let (sut, client) = makeSut()
         
         sut.search(input: "")
