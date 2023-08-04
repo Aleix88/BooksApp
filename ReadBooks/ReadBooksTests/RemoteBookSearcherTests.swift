@@ -49,17 +49,8 @@ final class RemoteBookSearcherTests: XCTestCase {
         let (sut, client) = makeSut(url: url)
 
         sut.search(input: "Some book name")
-        
-        XCTAssertEqual(client.requestedURLs, [url])
-    }
-    
-    func test_onSearchTwice_twoRequestAreSent() {
-        let url = URL(string: "https://www.some-url.com")!
-        let (sut, client) = makeSut(url: url)
-        
-        sut.search(input: "Some book name")
         sut.search(input: "Another book name")
-        
+
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
