@@ -19,8 +19,16 @@ class HTTPClientSpy: HTTPClient {
 final class RemoteBookSearcherTests: XCTestCase {
 
     // ARRANGE - ACT - ASSERT
-    func test_init_noneRequestIsSent() {
+    func test_init_noRequestIsSent() {
         let (_, client) = makeSut()
+        
+        XCTAssertEqual(client.requestedURLs, [])
+    }
+    
+    func test_onSearchWithEmptyInput_noRequestIsSent() {
+        let (sut, client) = makeSut()
+        
+        sut.search(input: "")
         
         XCTAssertEqual(client.requestedURLs, [])
     }
