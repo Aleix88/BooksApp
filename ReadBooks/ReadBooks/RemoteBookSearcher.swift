@@ -31,7 +31,7 @@ public class RemoteBookSearcher {
         guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
-        let _ = urlFactory.create(input: input)
+        let url = urlFactory.create(input: input)!
         client.get(url: url)
     }
 }

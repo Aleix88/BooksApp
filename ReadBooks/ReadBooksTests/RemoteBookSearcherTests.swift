@@ -16,12 +16,15 @@ class HTTPClientSpy: HTTPClient {
     }
 }
 
-class SearchURLFactorySpy: SearchURLAbstractFactory {
+class SearchURLFactoryMock: SearchURLAbstractFactory {
     var input: String?
+    var urls = [URL?]()
     
     func create(input: String) -> URL? {
+        let url = URL(string: "https://www.factory-url.com")
         self.input = input
-        return nil
+        self.urls.append(url)
+        return url
     }
 }
 
@@ -29,13 +32,13 @@ final class RemoteBookSearcherTests: XCTestCase {
 
     // ARRANGE - ACT - ASSERT
     func test_init_noRequestIsSent() {
-        let (_, client) = makeSut()
+        let (_, client, _) = makeSut()
         
         XCTAssertEqual(client.requestedURLs, [])
     }
     
     func test_onSearchWithEmptyInput_noRequestIsSent() {
-        let (sut, client) = makeSut()
+        let (sut, client, _) = makeSut()
         
         sut.search(input: "")
         sut.search(input: "    ")
@@ -45,13 +48,13 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
     
     func test_onSearch_requestIsSent() {
-        let url = URL(string: "https://www.some-url.com")!
-        let (sut, client) = makeSut(url: url)
+        let (sut, client, urlFactory) = makeSut()
 
         sut.search(input: "Some book name")
         sut.search(input: "Another book name")
 
-        XCTAssertEqual(client.requestedURLs, [url, url])
+        XCTAssertEqual(client.requestedURLs.count, 2)
+        XCTAssertEqual(client.requestedURLs, urlFactory.urls)
     }
     
     func test_onSearch_inputIsInjectedToURLFactory() {
@@ -63,15 +66,10 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
 
     // MARK: Helpers
-    func makeSut(url: URL = URL(string: "https://www.some-url.com")!) -> (RemoteBookSearcher, HTTPClientSpy) {
-        let client = HTTPClientSpy()
-        let sut = RemoteBookSearcher(client: client, url: url, urlFactory: SearchURLFactorySpy())
-        return (sut, client)
-    }
     
-    func makeSut(baseUrl: URL = URL(string: "https://www.some-url.com")!) -> (RemoteBookSearcher, HTTPClientSpy, SearchURLFactorySpy) {
+    func makeSut(baseUrl: URL = URL(string: "https://www.some-url.com")!) -> (RemoteBookSearcher, HTTPClientSpy, SearchURLFactoryMock) {
         let client = HTTPClientSpy()
-        let urlFactory = SearchURLFactorySpy()
+        let urlFactory = SearchURLFactoryMock()
         let sut = RemoteBookSearcher(client: client, url: baseUrl, urlFactory: urlFactory)
         return (sut, client, urlFactory)
     }
