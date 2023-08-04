@@ -72,7 +72,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         XCTAssertEqual(errors, [.connectivity])
     }
     
-    func test_onSearchWithStatusResponseNot200_deliversInvalidDataError() {
+    func test_onSearchWithStatusCodeNot200_deliversInvalidDataError() {
         let (sut, client) = makeSut()
         let samples = [199, 201, 300, 400, 500]
 
@@ -83,7 +83,6 @@ final class RemoteBookSearcherTests: XCTestCase {
             
             XCTAssertEqual(errors, [.invalidData])
         }
-
     }
 
     // MARK: Helpers
