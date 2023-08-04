@@ -26,10 +26,9 @@ public class RemoteBookSearcher {
     }
     
     public func search(input: String) {
-        guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return
-        }
-        let url = urlFactory.create(input: input)!
+        guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              let url = urlFactory.create(input: input)
+        else { return }
         client.get(url: url)
     }
 }

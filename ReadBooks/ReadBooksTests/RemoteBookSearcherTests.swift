@@ -28,6 +28,12 @@ class SearchURLFactoryMock: SearchURLAbstractFactory {
     }
 }
 
+class NilSearchURLFactoryStub: SearchURLAbstractFactory {
+    func create(input: String) -> URL? {
+        return nil
+    }
+}
+
 final class RemoteBookSearcherTests: XCTestCase {
 
     // ARRANGE - ACT - ASSERT
@@ -65,6 +71,15 @@ final class RemoteBookSearcherTests: XCTestCase {
         sut.search(input: "Some book name")
         
         XCTAssertEqual(urlFactory.input, "Some book name")
+    }
+    
+    func test_onSearchWithNilURLFromFactory_noRequestIsSent() {
+        let urlFactory = NilSearchURLFactoryStub()
+        let (sut, client) = makeSut(urlFactory: urlFactory)
+        
+        sut.search(input: "Some book name")
+        
+        XCTAssertEqual(client.requestedURLs, [])
     }
 
     // MARK: Helpers
