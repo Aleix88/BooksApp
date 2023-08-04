@@ -74,12 +74,16 @@ final class RemoteBookSearcherTests: XCTestCase {
     
     func test_onSearchWithStatusResponseNot200_deliversInvalidDataError() {
         let (sut, client) = makeSut()
+        let samples = [199, 201, 300, 400, 500]
 
-        var errors = [RemoteBookSearcher.Error]()
-        sut.search(input: "Some book name") { errors.append($0) }
-        client.completeWithHTTPResponse(statusCode: 404, at: 0)
+        samples.enumerated().forEach { index, statusCode in
+            var errors = [RemoteBookSearcher.Error]()
+            sut.search(input: "Some book name") { errors.append($0) }
+            client.completeWithHTTPResponse(statusCode: statusCode, at: index)
+            
+            XCTAssertEqual(errors, [.invalidData])
+        }
 
-        XCTAssertEqual(errors, [.invalidData])
     }
 
     // MARK: Helpers
@@ -112,7 +116,7 @@ class HTTPClientSpy: HTTPClient {
             httpVersion: nil,
             headerFields: nil
         )!
-        messages[0].completion(.success(response))
+        messages[index].completion(.success(response))
     }
 }
 
