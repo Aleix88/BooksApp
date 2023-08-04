@@ -24,6 +24,7 @@ public class RemoteBookSearcher {
     
     public enum Error: Swift.Error {
         case connectivity
+        case invalidData
     }
     
     private let client: HTTPClient
@@ -38,8 +39,13 @@ public class RemoteBookSearcher {
         guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               let url = urlFactory.create(input: input)
         else { return }
-        client.get(url: url) { _ in
-            completion(.connectivity)
+        client.get(url: url) { result in
+            switch result {
+            case .success(_):
+                completion(.invalidData)
+            case .failure(_):
+                completion(.connectivity)
+            }
         }
     }
 }
