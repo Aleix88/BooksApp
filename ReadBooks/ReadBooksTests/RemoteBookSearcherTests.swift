@@ -70,7 +70,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     func makeSut(baseUrl: URL = URL(string: "https://www.some-url.com")!) -> (RemoteBookSearcher, HTTPClientSpy, SearchURLFactoryMock) {
         let client = HTTPClientSpy()
         let urlFactory = SearchURLFactoryMock()
-        let sut = RemoteBookSearcher(client: client, url: baseUrl, urlFactory: urlFactory)
+        let sut = RemoteBookSearcher(client: client, urlFactory: urlFactory)
         return (sut, client, urlFactory)
     }
 }

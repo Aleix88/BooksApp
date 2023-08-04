@@ -18,12 +18,10 @@ public protocol SearchURLAbstractFactory {
 public class RemoteBookSearcher {
     
     private let client: HTTPClient
-    private let url: URL
     private let urlFactory: SearchURLAbstractFactory
     
-    public init(client: HTTPClient, url: URL, urlFactory: SearchURLAbstractFactory) {
+    public init(client: HTTPClient, urlFactory: SearchURLAbstractFactory) {
         self.client = client
-        self.url = url
         self.urlFactory = urlFactory
     }
     
