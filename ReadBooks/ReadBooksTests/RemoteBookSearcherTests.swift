@@ -65,13 +65,11 @@ final class RemoteBookSearcherTests: XCTestCase {
     func test_onSearch_deliversErrorOnClientError() {
         let (sut, client) = makeSut()
         
-        var sutError: RemoteBookSearcher.Error?
-        sut.search(input: "Some book name") { error in
-            sutError = error
-        }
+        var errors = [RemoteBookSearcher.Error]()
+        sut.search(input: "Some book name") { errors.append($0) }
         client.completeWithError()
         
-        XCTAssertEqual(sutError, .connectivity)
+        XCTAssertEqual(errors, [.connectivity])
     }
 
     // MARK: Helpers
