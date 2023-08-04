@@ -69,7 +69,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         sut.search(input: "Some book name") { error in
             sutError = error
         }
-        client.completions[0](NSError(domain: "", code: 0))
+        client.completeWithError()
         
         XCTAssertEqual(sutError, .connectivity)
     }
@@ -84,12 +84,17 @@ final class RemoteBookSearcherTests: XCTestCase {
 }
 
 class HTTPClientSpy: HTTPClient {
-    var requestedURLs = [URL]()
-    var completions = [(Error) -> Void]()
+    var messages = [(url: URL, completion: (Error) -> Void)]()
+    var requestedURLs: [URL] {
+        messages.map(\.url)
+    }
 
     func get(url: URL, completion: @escaping (Error) -> Void) {
-        completions.append(completion)
-        requestedURLs.append(url)
+        messages.append((url, completion))
+    }
+    
+    func completeWithError() {
+        messages[0].completion(NSError(domain: "", code: 0))
     }
 }
 
