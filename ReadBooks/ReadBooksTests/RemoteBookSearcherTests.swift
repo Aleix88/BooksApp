@@ -84,17 +84,17 @@ final class RemoteBookSearcherTests: XCTestCase {
 }
 
 class HTTPClientSpy: HTTPClient {
-    var messages = [(url: URL, completion: (Error) -> Void)]()
+    var messages = [(url: URL, completion: (HTTPClientResult) -> Void)]()
     var requestedURLs: [URL] {
         messages.map(\.url)
     }
 
-    func get(url: URL, completion: @escaping (Error) -> Void) {
+    func get(url: URL, completion: @escaping (HTTPClientResult) -> Void) {
         messages.append((url, completion))
     }
     
     func completeWithError() {
-        messages[0].completion(NSError(domain: "", code: 0))
+        messages[0].completion(.failure(NSError(domain: "", code: 0)))
     }
 }
 
