@@ -84,6 +84,17 @@ final class RemoteBookSearcherTests: XCTestCase {
             XCTAssertEqual(errors, [.invalidData])
         }
     }
+    
+    func test_onSearchWithStatusCode200AndInvalidJson_deliversInvalidDataError() {
+        let (sut, client) = makeSut()
+        let invalidJson = Data("Invalid json".utf8)
+        
+        var errors = [RemoteBookSearcher.Error]()
+        sut.search(input: "Some book name") { errors.append($0) }
+        client.completeWithHTTPResponse(statusCode: 200, data: invalidJson, at: 0)
+        
+        XCTAssertEqual(errors, [.invalidData])
+    }
 
     // MARK: Helpers
     
@@ -108,14 +119,14 @@ class HTTPClientSpy: HTTPClient {
         messages[0].completion(.failure(NSError(domain: "", code: 0)))
     }
     
-    func completeWithHTTPResponse(statusCode: Int, at index: Int) {
+    func completeWithHTTPResponse(statusCode: Int, data: Data? = nil, at index: Int) {
         let response = HTTPURLResponse(
             url: requestedURLs[index],
             statusCode: statusCode,
             httpVersion: nil,
             headerFields: nil
         )!
-        messages[index].completion(.success(response))
+        messages[index].completion(.success(data, response))
     }
 }
 
