@@ -29,6 +29,8 @@ final class RemoteBookSearcherTests: XCTestCase {
         let (sut, client) = makeSut()
         
         sut.search(input: "")
+        sut.search(input: "    ")
+        sut.search(input: "\n")
         
         XCTAssertEqual(client.requestedURLs, [])
     }

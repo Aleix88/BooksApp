@@ -22,7 +22,7 @@ public class RemoteBookSearcher {
     }
     
     public func search(input: String) {
-        guard !input.isEmpty else {
+        guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
         client.get(url: url)
