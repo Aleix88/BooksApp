@@ -8,28 +8,6 @@
 import XCTest
 import ReadBooks
 
-class HTTPClientSpy: HTTPClient {
-    var requestedURLs = [URL]()
-    var completions = [(Error) -> Void]()
-
-    func get(url: URL, completion: @escaping (Error) -> Void) {
-        completions.append(completion)
-        requestedURLs.append(url)
-    }
-}
-
-class SearchURLFactoryMock: SearchURLAbstractFactory {
-    var input: String?
-    var urls = [URL?]()
-    
-    func create(input: String) -> URL? {
-        let url = URL(string: "https://www.factory-url.com")
-        self.input = input
-        self.urls.append(url)
-        return url
-    }
-}
-
 class NilSearchURLFactoryStub: SearchURLAbstractFactory {
     func create(input: String) -> URL? {
         return nil
@@ -102,5 +80,27 @@ final class RemoteBookSearcherTests: XCTestCase {
         let client = HTTPClientSpy()
         let sut = RemoteBookSearcher(client: client, urlFactory: urlFactory)
         return (sut, client)
+    }
+}
+
+class HTTPClientSpy: HTTPClient {
+    var requestedURLs = [URL]()
+    var completions = [(Error) -> Void]()
+
+    func get(url: URL, completion: @escaping (Error) -> Void) {
+        completions.append(completion)
+        requestedURLs.append(url)
+    }
+}
+
+class SearchURLFactoryMock: SearchURLAbstractFactory {
+    var input: String?
+    var urls = [URL?]()
+    
+    func create(input: String) -> URL? {
+        let url = URL(string: "https://www.factory-url.com")
+        self.input = input
+        self.urls.append(url)
+        return url
     }
 }
