@@ -25,6 +25,7 @@ public class RemoteBookSearcher {
     public enum Error: Swift.Error {
         case connectivity
         case invalidData
+        case invalidInput
     }
     
     public enum Result: Equatable {
@@ -43,7 +44,10 @@ public class RemoteBookSearcher {
     public func search(input: String, completion: @escaping (Result) -> Void) {
         guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               let url = urlFactory.create(input: input)
-        else { return }
+        else {
+            completion(.failure(.invalidInput))
+            return
+        }
         client.get(url: url) { result in
             switch result {
             case .success(_, _):

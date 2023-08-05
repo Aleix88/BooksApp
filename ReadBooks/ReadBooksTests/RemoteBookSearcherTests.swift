@@ -23,13 +23,12 @@ final class RemoteBookSearcherTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [])
     }
     
-    func test_onSearchWithInvalidInput_noRequestIsSent() {
+    func test_onSearchWithInvalidInput_noRequestIsSentAndFailsWithInvalidInput() {
         let (sut, client) = makeSut()
         
-        sut.search(input: "") { _ in }
-        sut.search(input: "    ") { _ in }
-        sut.search(input: "\n") { _ in }
-        
+        expect(sut, withInput: "", toCompleteWith: .failure(.invalidInput))
+        expect(sut, withInput: "    ", toCompleteWith: .failure(.invalidInput))
+        expect(sut, withInput: "\n", toCompleteWith: .failure(.invalidInput))
         XCTAssertEqual(client.requestedURLs, [])
     }
     
@@ -100,14 +99,15 @@ final class RemoteBookSearcherTests: XCTestCase {
     
     func expect(
         _ sut: RemoteBookSearcher,
+        withInput input: String = "Some book name",
         toCompleteWith result: RemoteBookSearcher.Result,
-        when action: () -> Void,
+        when action: (() -> Void)? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
         var results = [RemoteBookSearcher.Result]()
-        sut.search(input: "Some book name") { results.append($0) }
-        action()
+        sut.search(input: input) { results.append($0) }
+        action?()
         
         XCTAssertEqual(results, [result], file: file, line: line)
     }
