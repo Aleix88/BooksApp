@@ -8,8 +8,15 @@
 import Foundation
 
 public struct Book: Equatable {
-    let id: UUID
-    let name: String
-    let author: String
-    let imageURL: URL?
+    public let id: UUID
+    public let name: String
+    public let author: String
+    public let imageURL: URL?
+    
+    public init(id: UUID, name: String, author: String, imageURL: URL?) {
+        self.id = id
+        self.name = name
+        self.author = author
+        self.imageURL = imageURL
+    }
 }
