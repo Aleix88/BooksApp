@@ -65,11 +65,9 @@ final class RemoteBookSearcherTests: XCTestCase {
     func test_onSearch_deliversErrorOnClientError() {
         let (sut, client) = makeSut()
         
-        var errors = [RemoteBookSearcher.Error]()
-        sut.search(input: "Some book name") { errors.append($0) }
-        client.completeWithError()
-        
-        XCTAssertEqual(errors, [.connectivity])
+        expect(sut, toCompleteWith: .failure(.connectivity)) {
+            client.completeWithError()
+        }
     }
     
     func test_onSearchWithStatusCodeNot200_deliversInvalidDataError() {
@@ -77,11 +75,9 @@ final class RemoteBookSearcherTests: XCTestCase {
         let samples = [199, 201, 300, 400, 500]
 
         samples.enumerated().forEach { index, statusCode in
-            var errors = [RemoteBookSearcher.Error]()
-            sut.search(input: "Some book name") { errors.append($0) }
-            client.completeWithHTTPResponse(statusCode: statusCode, at: index)
-            
-            XCTAssertEqual(errors, [.invalidData])
+            expect(sut, toCompleteWith: .failure(.invalidData)) {
+                client.completeWithHTTPResponse(statusCode: statusCode, at: index)
+            }
         }
     }
     
@@ -89,11 +85,9 @@ final class RemoteBookSearcherTests: XCTestCase {
         let (sut, client) = makeSut()
         let invalidJson = Data("Invalid json".utf8)
         
-        var errors = [RemoteBookSearcher.Error]()
-        sut.search(input: "Some book name") { errors.append($0) }
-        client.completeWithHTTPResponse(statusCode: 200, data: invalidJson, at: 0)
-        
-        XCTAssertEqual(errors, [.invalidData])
+        expect(sut, toCompleteWith: .failure(.invalidData)) {
+            client.completeWithHTTPResponse(statusCode: 200, data: invalidJson, at: 0)
+        }
     }
 
     // MARK: Helpers
@@ -102,6 +96,20 @@ final class RemoteBookSearcherTests: XCTestCase {
         let client = HTTPClientSpy()
         let sut = RemoteBookSearcher(client: client, urlFactory: urlFactory)
         return (sut, client)
+    }
+    
+    func expect(
+        _ sut: RemoteBookSearcher,
+        toCompleteWith result: RemoteBookSearcher.Result,
+        when action: () -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        var results = [RemoteBookSearcher.Result]()
+        sut.search(input: "Some book name") { results.append($0) }
+        action()
+        
+        XCTAssertEqual(results, [result], file: file, line: line)
     }
 }
 

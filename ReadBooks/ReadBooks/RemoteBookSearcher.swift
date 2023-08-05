@@ -27,6 +27,11 @@ public class RemoteBookSearcher {
         case invalidData
     }
     
+    public enum Result: Equatable {
+        case success([Book])
+        case failure(Error)
+    }
+    
     private let client: HTTPClient
     private let urlFactory: SearchURLAbstractFactory
     
@@ -35,16 +40,16 @@ public class RemoteBookSearcher {
         self.urlFactory = urlFactory
     }
     
-    public func search(input: String, completion: @escaping (Error) -> Void = { _ in }) {
+    public func search(input: String, completion: @escaping (Result) -> Void = { _ in }) {
         guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               let url = urlFactory.create(input: input)
         else { return }
         client.get(url: url) { result in
             switch result {
             case .success(_, _):
-                completion(.invalidData)
+                completion(.failure(.invalidData))
             case .failure(_):
-                completion(.connectivity)
+                completion(.failure(.connectivity))
             }
         }
     }

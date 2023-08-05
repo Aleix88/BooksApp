@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Book {
+public struct Book: Equatable {
     let id: String
     let name: String
     let author: String
