@@ -102,6 +102,41 @@ final class RemoteBookSearcherTests: XCTestCase {
             client.completeWithHTTPResponse(statusCode: 200, data: validJson, at: 0)
         }
     }
+    
+    func test_onSearch_withStatusCode200AndJsonWithBooks_deliversBooks() {
+        let (sut, client) = makeSut()
+        let book1 = Book(
+            id: UUID(),
+            name: "Book 1",
+            author: "Author 1",
+            imageURL: nil
+        )
+        let book2 = Book(
+            id: UUID(),
+            name: "Book 2",
+            author: "Author 2",
+            imageURL: URL(string: "https://www.google.es")!
+        )
+        let book1JSON: [String: Any] = [
+            "id": book1.id.uuidString,
+            "name": book1.name,
+            "author": book1.author
+        ]
+        let book2JSON: [String: Any] = [
+            "id": book2.id.uuidString,
+            "name": book2.name,
+            "author": book2.author,
+            "image": book2.imageURL!.absoluteString
+        ]
+        let rootJSON: [String: Any] = [
+            "books": [book1JSON, book2JSON]
+        ]
+        let data = try! JSONSerialization.data(withJSONObject: rootJSON)
+        
+        expect(sut, toCompleteWith: .success([book1, book2])) {
+            client.completeWithHTTPResponse(statusCode: 200, data: data, at: 0)
+        }
+    }
 
     // MARK: Helpers
     

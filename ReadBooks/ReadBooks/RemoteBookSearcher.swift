@@ -53,8 +53,9 @@ public class RemoteBookSearcher {
             switch result {
             case let .success(data, response):
                 if response.statusCode == 200,
-                   let _ = try? JSONSerialization.jsonObject(with: data) {
-                    completion(.success([]))
+                   let root = try? JSONDecoder().decode(Root.self, from: data) {
+                    let books = root.books.map(\.book)
+                    completion(.success(books))
                 } else {
                     completion(.failure(.invalidData))
                 }
@@ -62,5 +63,20 @@ public class RemoteBookSearcher {
                 completion(.failure(.connectivity))
             }
         }
+    }
+}
+
+private struct Root: Decodable {
+    let books: [BookDTO]
+}
+
+private struct BookDTO: Decodable {
+    private let id: UUID
+    private let name: String
+    private let author: String
+    private let image: URL?
+    
+    var book: Book {
+        Book(id: id, name: name, author: author, imageURL: image)
     }
 }
