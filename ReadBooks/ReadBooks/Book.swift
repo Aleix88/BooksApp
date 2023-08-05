@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Book: Equatable {
-    let id: String
+    let id: UUID
     let name: String
     let author: String
     let imageURL: URL?
