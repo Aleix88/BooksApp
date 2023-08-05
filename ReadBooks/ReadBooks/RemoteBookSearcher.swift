@@ -48,10 +48,15 @@ public class RemoteBookSearcher {
             completion(.failure(.invalidInput))
             return
         }
+        
         client.get(url: url) { result in
             switch result {
-            case .success(_, _):
-                completion(.failure(.invalidData))
+            case let .success(data, _):
+                if let data, let _ = try? JSONSerialization.jsonObject(with: data) {
+                    completion(.success([]))
+                } else {
+                    completion(.failure(.invalidData))
+                }
             case .failure(_):
                 completion(.failure(.connectivity))
             }

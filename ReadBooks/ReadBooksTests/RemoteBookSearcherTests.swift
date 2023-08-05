@@ -89,6 +89,15 @@ final class RemoteBookSearcherTests: XCTestCase {
         }
     }
 
+    func test_onSearchWithStatusCode200AndValidJson_deliversEmptyArray() {
+        let (sut, client) = makeSut()
+        let validJson = Data("{ \"books\": [] }".utf8)
+
+        expect(sut, toCompleteWith: .success([])) {
+            client.completeWithHTTPResponse(statusCode: 200, data: validJson, at: 0)
+        }
+    }
+
     // MARK: Helpers
     
     func makeSut(urlFactory: SearchURLAbstractFactory = SearchURLFactoryMock()) -> (RemoteBookSearcher, HTTPClientSpy) {
