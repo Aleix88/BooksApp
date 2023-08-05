@@ -23,7 +23,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [])
     }
     
-    func test_onSearchWithInvalidInput_noRequestIsSentAndFailsWithInvalidInput() {
+    func test_onSearch_withInvalidInput_noRequestIsSentAndFailsWithInvalidInput() {
         let (sut, client) = makeSut()
         
         expect(sut, withInput: "", toCompleteWith: .failure(.invalidInput))
@@ -52,7 +52,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         XCTAssertEqual(urlFactory.input, "Some book name")
     }
     
-    func test_onSearchWithNilURLFromFactory_noRequestIsSent() {
+    func test_onSearch_withNilURLFromFactory_noRequestIsSent() {
         let urlFactory = NilSearchURLFactoryStub()
         let (sut, client) = makeSut(urlFactory: urlFactory)
         
@@ -69,7 +69,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         }
     }
     
-    func test_onSearchWithStatusCodeNot200_deliversInvalidDataError() {
+    func test_onSearch_withStatusCodeNot200_deliversInvalidDataError() {
         let (sut, client) = makeSut()
         let samples = [199, 201, 300, 400, 500]
         let validJson = Data("{ \"books\": [] }".utf8)
@@ -85,7 +85,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         }
     }
     
-    func test_onSearchWithStatusCode200AndInvalidJson_deliversInvalidDataError() {
+    func test_onSearch_withStatusCode200AndInvalidJson_deliversInvalidDataError() {
         let (sut, client) = makeSut()
         let invalidJson = Data("Invalid json".utf8)
         
@@ -94,7 +94,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         }
     }
 
-    func test_onSearchWithStatusCode200AndValidJson_deliversEmptyArray() {
+    func test_onSearch_withStatusCode200AndValidJson_deliversEmptyArray() {
         let (sut, client) = makeSut()
         let validJson = Data("{ \"books\": [] }".utf8)
 
