@@ -8,7 +8,7 @@
 import Foundation
 
 public enum HTTPClientResult {
-    case success(Data?, HTTPURLResponse)
+    case success(Data, HTTPURLResponse)
     case failure(Error)
 }
 
@@ -51,8 +51,9 @@ public class RemoteBookSearcher {
         
         client.get(url: url) { result in
             switch result {
-            case let .success(data, _):
-                if let data, let _ = try? JSONSerialization.jsonObject(with: data) {
+            case let .success(data, response):
+                if response.statusCode == 200,
+                   let _ = try? JSONSerialization.jsonObject(with: data) {
                     completion(.success([]))
                 } else {
                     completion(.failure(.invalidData))

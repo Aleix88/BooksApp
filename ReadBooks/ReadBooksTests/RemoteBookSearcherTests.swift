@@ -72,10 +72,15 @@ final class RemoteBookSearcherTests: XCTestCase {
     func test_onSearchWithStatusCodeNot200_deliversInvalidDataError() {
         let (sut, client) = makeSut()
         let samples = [199, 201, 300, 400, 500]
+        let validJson = Data("{ \"books\": [] }".utf8)
 
         samples.enumerated().forEach { index, statusCode in
             expect(sut, toCompleteWith: .failure(.invalidData)) {
-                client.completeWithHTTPResponse(statusCode: statusCode, at: index)
+                client.completeWithHTTPResponse(
+                    statusCode: statusCode,
+                    data: validJson,
+                    at: index
+                )
             }
         }
     }
@@ -136,7 +141,7 @@ class HTTPClientSpy: HTTPClient {
         messages[0].completion(.failure(NSError(domain: "", code: 0)))
     }
     
-    func completeWithHTTPResponse(statusCode: Int, data: Data? = nil, at index: Int) {
+    func completeWithHTTPResponse(statusCode: Int, data: Data, at index: Int) {
         let response = HTTPURLResponse(
             url: requestedURLs[index],
             statusCode: statusCode,
