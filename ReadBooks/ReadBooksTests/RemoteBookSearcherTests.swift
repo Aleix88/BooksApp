@@ -26,9 +26,9 @@ final class RemoteBookSearcherTests: XCTestCase {
     func test_onSearchWithInvalidInput_noRequestIsSent() {
         let (sut, client) = makeSut()
         
-        sut.search(input: "")
-        sut.search(input: "    ")
-        sut.search(input: "\n")
+        sut.search(input: "") { _ in }
+        sut.search(input: "    ") { _ in }
+        sut.search(input: "\n") { _ in }
         
         XCTAssertEqual(client.requestedURLs, [])
     }
@@ -37,8 +37,8 @@ final class RemoteBookSearcherTests: XCTestCase {
         let urlFactory = SearchURLFactoryMock()
         let (sut, client) = makeSut(urlFactory: urlFactory)
         
-        sut.search(input: "Some book name")
-        sut.search(input: "Another book name")
+        sut.search(input: "Some book name") { _ in }
+        sut.search(input: "Another book name") { _ in }
 
         XCTAssertEqual(client.requestedURLs.count, 2)
         XCTAssertEqual(client.requestedURLs, urlFactory.urls)
@@ -48,7 +48,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         let urlFactory = SearchURLFactoryMock()
         let (sut, _) = makeSut(urlFactory: urlFactory)
         
-        sut.search(input: "Some book name")
+        sut.search(input: "Some book name") { _ in }
         
         XCTAssertEqual(urlFactory.input, "Some book name")
     }
@@ -57,7 +57,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         let urlFactory = NilSearchURLFactoryStub()
         let (sut, client) = makeSut(urlFactory: urlFactory)
         
-        sut.search(input: "Some book name")
+        sut.search(input: "Some book name") { _ in }
         
         XCTAssertEqual(client.requestedURLs, [])
     }

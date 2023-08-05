@@ -40,7 +40,7 @@ public class RemoteBookSearcher {
         self.urlFactory = urlFactory
     }
     
-    public func search(input: String, completion: @escaping (Result) -> Void = { _ in }) {
+    public func search(input: String, completion: @escaping (Result) -> Void) {
         guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               let url = urlFactory.create(input: input)
         else { return }
