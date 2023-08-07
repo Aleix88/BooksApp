@@ -128,6 +128,9 @@ final class RemoteBookSearcherTests: XCTestCase {
     func makeSut(urlFactory: SearchURLAbstractFactory = SearchURLFactoryMock()) -> (RemoteBookSearcher, HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteBookSearcher(client: client, urlFactory: urlFactory)
+        addTeardownBlock { [weak sut] in
+            XCTAssertNil(sut, "Expecting SUT to deallocate after test execution.")
+        }
         return (sut, client)
     }
     
