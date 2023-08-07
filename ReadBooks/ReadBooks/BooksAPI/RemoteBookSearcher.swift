@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class RemoteBookSearcher {
+public class RemoteBookSearcher: BookSearcher {
     
     public enum Error: Swift.Error {
         case connectivity
