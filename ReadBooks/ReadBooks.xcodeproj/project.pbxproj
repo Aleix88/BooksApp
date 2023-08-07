@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E8583D7D2A80BF0C00EB15C9 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D7C2A80BF0C00EB15C9 /* HTTPClient.swift */; };
+		E8583D802A80BF4000EB15C9 /* SearchURLAbstractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D7F2A80BF4000EB15C9 /* SearchURLAbstractFactory.swift */; };
 		E87756052A7B6C47004511E6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756042A7B6C47004511E6 /* Book.swift */; };
 		E87756092A7B70E5004511E6 /* BookSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756082A7B70E5004511E6 /* BookSearcher.swift */; };
 		E877560B2A7B71BF004511E6 /* RemoteBookSearcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		E8583D7C2A80BF0C00EB15C9 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		E8583D7F2A80BF4000EB15C9 /* SearchURLAbstractFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchURLAbstractFactory.swift; sourceTree = "<group>"; };
 		E87756042A7B6C47004511E6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		E87756082A7B70E5004511E6 /* BookSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearcher.swift; sourceTree = "<group>"; };
 		E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteBookSearcherTests.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			children = (
 				E877560C2A7B7582004511E6 /* RemoteBookSearcher.swift */,
 				E8583D7C2A80BF0C00EB15C9 /* HTTPClient.swift */,
+				E8583D7F2A80BF4000EB15C9 /* SearchURLAbstractFactory.swift */,
 			);
 			path = BooksAPI;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				E87756052A7B6C47004511E6 /* Book.swift in Sources */,
 				E877560D2A7B7582004511E6 /* RemoteBookSearcher.swift in Sources */,
 				E8583D7D2A80BF0C00EB15C9 /* HTTPClient.swift in Sources */,
+				E8583D802A80BF4000EB15C9 /* SearchURLAbstractFactory.swift in Sources */,
 				E87756092A7B70E5004511E6 /* BookSearcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

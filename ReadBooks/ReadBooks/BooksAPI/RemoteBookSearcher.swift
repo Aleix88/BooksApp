@@ -7,10 +7,6 @@
 
 import Foundation
 
-public protocol SearchURLAbstractFactory {
-    func create(input: String) -> URL?
-}
-
 public class RemoteBookSearcher {
     
     public enum Error: Swift.Error {
