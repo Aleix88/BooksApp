@@ -19,10 +19,10 @@ class URLSessionHTTPClient {
         self.session = session
     }
     
-    func get(url: URL, completion: @escaping () -> Void) {
+    func get(url: URL, completion: @escaping (HTTPClientResult) -> Void) {
         let request = URLRequest(url: url)
-        session.dataTask(with: request) { _, _, _ in
-            completion()
+        session.dataTask(with: request) { _, _, error in
+            completion(.success(Data(), HTTPURLResponse()))
         }.resume()
     }
 }
@@ -46,7 +46,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
         let url = URL(string: "https://www.some-url.com")!
         let sut = URLSessionHTTPClient()
 
-        sut.get(url: url) {
+        sut.get(url: url) { _ in
             expect.fulfill()
         }
         
