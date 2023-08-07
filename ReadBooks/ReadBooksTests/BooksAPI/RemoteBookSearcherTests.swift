@@ -165,16 +165,27 @@ final class RemoteBookSearcherTests: XCTestCase {
     func expect(
         _ sut: RemoteBookSearcher,
         withInput input: String = "Some book name",
-        toCompleteWith result: RemoteBookSearcher.Result,
+        toCompleteWith expectedResult: RemoteBookSearcher.Result,
         when action: (() -> Void)? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        var results = [RemoteBookSearcher.Result]()
-        sut.search(input: input) { results.append($0) }
+        let expectation = expectation(description: "Wait for search completion")
+        
+        sut.search(input: input) { result in
+            switch (result, expectedResult) {
+            case (.success(let books), .success(let expectedBooks)):
+                XCTAssertEqual(books, expectedBooks, file: file, line: line)
+            case (.failure(let error), .failure(let expectedError)):
+                XCTAssertEqual(error, expectedError, file: file, line: line)
+            default:
+                XCTFail("Expecting \(expectedResult) and got \(result)")
+            }
+            expectation.fulfill()
+        }
         action?()
         
-        XCTAssertEqual(results, [result], file: file, line: line)
+        wait(for: [expectation], timeout: 1)
     }
 }
 

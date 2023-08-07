@@ -12,8 +12,6 @@ public enum BookSearchResult<Error> {
     case failure(Error)
 }
 
-extension BookSearchResult: Equatable where Error: Equatable {}
-
 protocol BookSearcher {
     associatedtype Error
     func search(input: String, completion: @escaping (BookSearchResult<Error>) -> Void)
