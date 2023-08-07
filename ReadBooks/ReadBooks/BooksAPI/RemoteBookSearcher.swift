@@ -15,7 +15,7 @@ public class RemoteBookSearcher: BookSearcher {
         case invalidInput
     }
     
-    public typealias Result = BookSearchResult<Error>
+    public typealias Result = BookSearchResult
     
     private let client: HTTPClient
     private let urlFactory: SearchURLAbstractFactory

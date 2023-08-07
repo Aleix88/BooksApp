@@ -25,9 +25,9 @@ final class RemoteBookSearcherTests: XCTestCase {
     func test_onSearch_withInvalidInput_noRequestIsSentAndFailsWithInvalidInput() {
         let (sut, client) = makeSut()
         
-        expect(sut, withInput: "", toCompleteWith: .failure(.invalidInput))
-        expect(sut, withInput: "    ", toCompleteWith: .failure(.invalidInput))
-        expect(sut, withInput: "\n", toCompleteWith: .failure(.invalidInput))
+        expect(sut, withInput: "", toCompleteWith: failure(.invalidInput))
+        expect(sut, withInput: "    ", toCompleteWith: failure(.invalidInput))
+        expect(sut, withInput: "\n", toCompleteWith: failure(.invalidInput))
         XCTAssertEqual(client.requestedURLs, [])
     }
     
@@ -63,7 +63,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     func test_onSearch_deliversErrorOnClientError() {
         let (sut, client) = makeSut()
         
-        expect(sut, toCompleteWith: .failure(.connectivity)) {
+        expect(sut, toCompleteWith: failure(.connectivity)) {
             client.completeWithError()
         }
     }
@@ -74,7 +74,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         let validJson = makeBooksJSON()
 
         samples.enumerated().forEach { index, statusCode in
-            expect(sut, toCompleteWith: .failure(.invalidData)) {
+            expect(sut, toCompleteWith: failure(.invalidData)) {
                 client.completeWithHTTPResponse(
                     statusCode: statusCode,
                     data: validJson,
@@ -88,7 +88,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         let (sut, client) = makeSut()
         let invalidJson = Data("Invalid json".utf8)
         
-        expect(sut, toCompleteWith: .failure(.invalidData)) {
+        expect(sut, toCompleteWith: failure(.invalidData)) {
             client.completeWithHTTPResponse(statusCode: 200, data: invalidJson, at: 0)
         }
     }
@@ -162,6 +162,10 @@ final class RemoteBookSearcherTests: XCTestCase {
         return try! JSONSerialization.data(withJSONObject: root)
     }
     
+    func failure(_ error: RemoteBookSearcher.Error) -> RemoteBookSearcher.Result {
+        return .failure(error)
+    }
+    
     func expect(
         _ sut: RemoteBookSearcher,
         withInput input: String = "Some book name",
@@ -176,7 +180,7 @@ final class RemoteBookSearcherTests: XCTestCase {
             switch (result, expectedResult) {
             case (.success(let books), .success(let expectedBooks)):
                 XCTAssertEqual(books, expectedBooks, file: file, line: line)
-            case (.failure(let error), .failure(let expectedError)):
+            case (.failure(let error as RemoteBookSearcher.Error), .failure(let expectedError as RemoteBookSearcher.Error)):
                 XCTAssertEqual(error, expectedError, file: file, line: line)
             default:
                 XCTFail("Expecting \(expectedResult) and got \(result)")

@@ -7,12 +7,11 @@
 
 import Foundation
 
-public enum BookSearchResult<Error> {
+public enum BookSearchResult{
     case success([Book])
     case failure(Error)
 }
 
 protocol BookSearcher {
-    associatedtype Error
-    func search(input: String, completion: @escaping (BookSearchResult<Error>) -> Void)
+    func search(input: String, completion: @escaping (BookSearchResult) -> Void)
 }
