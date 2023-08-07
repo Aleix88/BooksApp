@@ -15,7 +15,7 @@ import ReadBooks
 class URLSessionHTTPClient {
     let session: URLSession
     
-    init(session: URLSession) {
+    init(session: URLSession = .shared) {
         self.session = session
     }
     
@@ -32,8 +32,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     func test_init_noRequestIsSent() {
         URLProtocolSpy.startInterceptingRequests()
         
-        let session = URLSession.shared
-        _ = URLSessionHTTPClient(session: session)
+        _ = URLSessionHTTPClient()
         
         XCTAssertEqual(URLProtocolSpy.requestsURLs, [])
         
@@ -45,8 +44,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
 
         let expect = expectation(description: "Wait for get completion")
         let url = URL(string: "https://www.some-url.com")!
-        let session = URLSession.shared
-        let sut = URLSessionHTTPClient(session: session)
+        let sut = URLSessionHTTPClient()
 
         sut.get(url: url) {
             expect.fulfill()
