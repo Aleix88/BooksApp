@@ -7,15 +7,6 @@
 
 import Foundation
 
-public enum HTTPClientResult {
-    case success(Data, HTTPURLResponse)
-    case failure(Error)
-}
-
-public protocol HTTPClient {
-    func get(url: URL, completion: @escaping (HTTPClientResult) -> Void)
-}
-
 public protocol SearchURLAbstractFactory {
     func create(input: String) -> URL?
 }
