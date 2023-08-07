@@ -25,20 +25,28 @@ class URLSessionHTTPClient {
 final class URLSessionHTTPClientTests: XCTestCase {
 
     func test_init_noRequestIsSent() {
-        URLProtocol.registerClass(URLProtocolSpy.self)
-
+        URLProtocolSpy.registerHandler()
+        
         let session = URLSession.shared
-        let sut = URLSessionHTTPClient(session: session)
+        _ = URLSessionHTTPClient(session: session)
         
         XCTAssertEqual(URLProtocolSpy.requests, [])
         
-        URLProtocol.unregisterClass(URLProtocolSpy.self)
+        URLProtocolSpy.unregisterHandler()
     }
 
 }
 
 class URLProtocolSpy: URLProtocol {
     static var requests = [URLRequest]()
+    
+    static func registerHandler() {
+        URLProtocol.registerClass(Self.self)
+    }
+    
+    static func unregisterHandler() {
+        URLProtocol.unregisterClass(Self.self)
+    }
     
     override class func canInit(with request: URLRequest) -> Bool {
         requests.append(request)
