@@ -16,7 +16,6 @@ class NilSearchURLFactoryStub: SearchURLAbstractFactory {
 
 final class RemoteBookSearcherTests: XCTestCase {
 
-    // ARRANGE - ACT - ASSERT
     func test_init_noRequestIsSent() {
         let (_, client) = makeSut()
         
@@ -72,7 +71,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     func test_onSearch_withStatusCodeNot200_deliversInvalidDataError() {
         let (sut, client) = makeSut()
         let samples = [199, 201, 300, 400, 500]
-        let validJson = Data("{ \"books\": [] }".utf8)
+        let validJson = makeBooksJSON()
 
         samples.enumerated().forEach { index, statusCode in
             expect(sut, toCompleteWith: .failure(.invalidData)) {
@@ -96,7 +95,7 @@ final class RemoteBookSearcherTests: XCTestCase {
 
     func test_onSearch_withStatusCode200AndValidJson_deliversEmptyArray() {
         let (sut, client) = makeSut()
-        let validJson = Data("{ \"books\": [] }".utf8)
+        let validJson = makeBooksJSON()
 
         expect(sut, toCompleteWith: .success([])) {
             client.completeWithHTTPResponse(statusCode: 200, data: validJson, at: 0)
@@ -117,24 +116,10 @@ final class RemoteBookSearcherTests: XCTestCase {
             author: "Author 2",
             imageURL: URL(string: "https://www.google.es")!
         )
-        let book1JSON: [String: Any] = [
-            "id": book1.id.uuidString,
-            "name": book1.name,
-            "author": book1.author
-        ]
-        let book2JSON: [String: Any] = [
-            "id": book2.id.uuidString,
-            "name": book2.name,
-            "author": book2.author,
-            "image": book2.imageURL!.absoluteString
-        ]
-        let rootJSON: [String: Any] = [
-            "books": [book1JSON, book2JSON]
-        ]
-        let data = try! JSONSerialization.data(withJSONObject: rootJSON)
+        let booksJson = makeBooksJSON(books: [book1, book2])
         
         expect(sut, toCompleteWith: .success([book1, book2])) {
-            client.completeWithHTTPResponse(statusCode: 200, data: data, at: 0)
+            client.completeWithHTTPResponse(statusCode: 200, data: booksJson, at: 0)
         }
     }
 
@@ -144,6 +129,21 @@ final class RemoteBookSearcherTests: XCTestCase {
         let client = HTTPClientSpy()
         let sut = RemoteBookSearcher(client: client, urlFactory: urlFactory)
         return (sut, client)
+    }
+    
+    func makeBooksJSON(books: [Book] = []) -> Data {
+        let booksJson = books.reduce([]) { partialResult, book in
+            let bookJSON: [String: Any?] = [
+                "id": book.id.uuidString,
+                "name": book.name,
+                "author": book.author,
+                "image": book.imageURL?.absoluteString
+            ]
+            let jsonItem: [String: Any] = bookJSON.compactMapValues { $0 }
+            return partialResult + [jsonItem]
+        }
+        let root = ["books": booksJson]
+        return try! JSONSerialization.data(withJSONObject: root)
     }
     
     func expect(
