@@ -78,6 +78,14 @@
 			path = BooksAPI;
 			sourceTree = "<group>";
 		};
+		E8583D832A80C00500EB15C9 /* BooksAPI */ = {
+			isa = PBXGroup;
+			children = (
+				E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */,
+			);
+			path = BooksAPI;
+			sourceTree = "<group>";
+		};
 		E8D7B2222A7A85A8003820D4 = {
 			isa = PBXGroup;
 			children = (
@@ -108,7 +116,7 @@
 		E8D7B23A2A7A85A9003820D4 /* ReadBooksTests */ = {
 			isa = PBXGroup;
 			children = (
-				E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */,
+				E8583D832A80C00500EB15C9 /* BooksAPI */,
 			);
 			path = ReadBooksTests;
 			sourceTree = "<group>";
