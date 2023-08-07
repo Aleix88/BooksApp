@@ -13,5 +13,5 @@ enum BookSearchResult {
 }
 
 protocol BookSearcher {
-    func search(input: String, completion: (BookSearchResult) -> Void)
+    func search(input: String, completion: @escaping (BookSearchResult) -> Void)
 }
