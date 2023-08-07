@@ -15,10 +15,7 @@ public class RemoteBookSearcher {
         case invalidInput
     }
     
-    public enum Result: Equatable {
-        case success([Book])
-        case failure(Error)
-    }
+    public typealias Result = BookSearchResult<Error>
     
     private let client: HTTPClient
     private let urlFactory: SearchURLAbstractFactory
@@ -32,7 +29,7 @@ public class RemoteBookSearcher {
         guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               let url = urlFactory.create(input: input)
         else {
-            completion(.failure(.invalidInput))
+            completion(.failure(Error.invalidInput))
             return
         }
         
@@ -42,7 +39,7 @@ public class RemoteBookSearcher {
             case let .success(data, response):
                 completion(BooksDataMapper.map(data, response))
             case .failure(_):
-                completion(.failure(.connectivity))
+                completion(.failure(Error.connectivity))
             }
         }
     }

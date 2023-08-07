@@ -29,7 +29,7 @@ internal final class BooksDataMapper {
             let books = root.books.map(\.book)
             return .success(books)
         } else {
-            return .failure(.invalidData)
+            return .failure(RemoteBookSearcher.Error.invalidData)
         }
     }
 }
