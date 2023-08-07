@@ -122,6 +122,19 @@ final class RemoteBookSearcherTests: XCTestCase {
             client.completeWithHTTPResponse(statusCode: 200, data: booksJson, at: 0)
         }
     }
+    
+    func test_onSearch_whenSutDeallocates_completionIsNotCalled() {
+        var (sut, client): (RemoteBookSearcher?, HTTPClientSpy) = makeSut()
+        
+        var didCallCompletion = false
+        sut?.search(input: "Some book name", completion: { _ in
+            didCallCompletion = true
+        })
+        sut = nil
+        client.completeWithHTTPResponse(statusCode: 200, data: makeBooksJSON(), at: 0)
+        
+        XCTAssertFalse(didCallCompletion)
+    }
 
     // MARK: Helpers
     

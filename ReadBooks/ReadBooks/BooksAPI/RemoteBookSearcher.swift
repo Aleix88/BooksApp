@@ -36,7 +36,8 @@ public class RemoteBookSearcher {
             return
         }
         
-        client.get(url: url) { result in
+        client.get(url: url) { [weak self] result in
+            guard self != nil else { return }
             switch result {
             case let .success(data, response):
                 completion(BooksDataMapper.map(data, response))
