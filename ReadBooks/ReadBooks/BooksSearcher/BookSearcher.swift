@@ -9,7 +9,7 @@ import Foundation
 
 enum BookSearchResult {
     case success([Book])
-    case error(Error)
+    case failure(Error)
 }
 
 protocol BookSearcher {
