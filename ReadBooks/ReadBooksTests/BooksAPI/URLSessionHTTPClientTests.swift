@@ -22,7 +22,11 @@ class URLSessionHTTPClient {
     func get(url: URL, completion: @escaping (HTTPClientResult) -> Void) {
         let request = URLRequest(url: url)
         session.dataTask(with: request) { _, _, error in
-            completion(.success(Data(), HTTPURLResponse()))
+            if let error {
+                completion(.failure(error))
+            } else {
+                completion(.success(Data(), HTTPURLResponse()))
+            }
         }.resume()
     }
 }
@@ -55,10 +59,40 @@ final class URLSessionHTTPClientTests: XCTestCase {
 
         URLProtocolSpy.stopInterceptingRequests()
     }
+    
+    func test_get_failsOnRequestError() {
+        URLProtocolSpy.startInterceptingRequests()
+
+        let expect = expectation(description: "Wait for get completion")
+        let url = URL(string: "https://www.some-url.com")!
+        let sut = URLSessionHTTPClient()
+        let expectedError = NSError(domain: "", code: 0)
+        URLProtocolSpy.setStub(expectedError)
+
+        sut.get(url: url) { result in
+            switch result {
+            case .failure(let error as NSError):
+                XCTAssertEqual(error.domain, expectedError.domain)
+                XCTAssertEqual(error.code, expectedError.code)
+            case .success:
+                XCTFail("Expecting failing and got success")
+            }
+            expect.fulfill()
+        }
+
+        wait(for: [expect], timeout: 1.0)
+
+        URLProtocolSpy.stopInterceptingRequests()
+    }
 }
 
 class URLProtocolSpy: URLProtocol {
     static var requestsURLs = [URL?]()
+    static var stub: Error?
+    
+    static func setStub(_ error: Error) {
+        stub = error
+    }
     
     static func startInterceptingRequests() {
         URLProtocol.registerClass(Self.self)
@@ -66,6 +100,7 @@ class URLProtocolSpy: URLProtocol {
     
     static func stopInterceptingRequests() {
         requestsURLs = []
+        stub = nil
         URLProtocol.unregisterClass(Self.self)
     }
     
@@ -79,6 +114,9 @@ class URLProtocolSpy: URLProtocol {
     }
     
     override func startLoading() {
+        if let error = Self.stub {
+            client?.urlProtocol(self, didFailWithError: error)
+        }
         client?.urlProtocolDidFinishLoading(self)
     }
     
