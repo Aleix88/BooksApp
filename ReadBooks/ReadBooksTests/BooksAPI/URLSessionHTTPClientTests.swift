@@ -38,7 +38,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
         
         _ = URLSessionHTTPClient()
         
-        XCTAssertEqual(URLProtocolSpy.requestsURLs, [])
+        XCTAssertFalse(URLProtocolSpy.didHandleAnyRequest)
         
         URLProtocolSpy.stopInterceptingRequests()
     }
@@ -70,7 +70,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
 }
 
 class URLProtocolSpy: URLProtocol {
-    static var requestsURLs = [URL?]()
+    static var didHandleAnyRequest = false
     static var stubs = [URL: Error?]()
 
     static func setStub(_ error: Error, for url: URL) {
@@ -83,13 +83,13 @@ class URLProtocolSpy: URLProtocol {
     
     static func stopInterceptingRequests() {
         stubs = [:]
-        requestsURLs = []
+        didHandleAnyRequest = false
         URLProtocol.unregisterClass(Self.self)
     }
     
     override class func canInit(with request: URLRequest) -> Bool {
         guard request.url != nil else { return false }
-        requestsURLs.append(request.url)
+        didHandleAnyRequest = true
         return true
     }
 
