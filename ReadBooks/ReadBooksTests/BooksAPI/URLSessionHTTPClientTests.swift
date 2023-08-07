@@ -25,14 +25,14 @@ class URLSessionHTTPClient {
 final class URLSessionHTTPClientTests: XCTestCase {
 
     func test_init_noRequestIsSent() {
-        URLProtocolSpy.registerHandler()
+        URLProtocolSpy.startInterceptingRequests()
         
         let session = URLSession.shared
         _ = URLSessionHTTPClient(session: session)
         
         XCTAssertEqual(URLProtocolSpy.requests, [])
         
-        URLProtocolSpy.unregisterHandler()
+        URLProtocolSpy.stopInterceptingRequests()
     }
 
 }
@@ -40,17 +40,22 @@ final class URLSessionHTTPClientTests: XCTestCase {
 class URLProtocolSpy: URLProtocol {
     static var requests = [URLRequest]()
     
-    static func registerHandler() {
+    static func startInterceptingRequests() {
         URLProtocol.registerClass(Self.self)
     }
     
-    static func unregisterHandler() {
+    static func stopInterceptingRequests() {
+        requests = []
         URLProtocol.unregisterClass(Self.self)
     }
     
     override class func canInit(with request: URLRequest) -> Bool {
         requests.append(request)
         return true
+    }
+
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+        return request
     }
 }
 
