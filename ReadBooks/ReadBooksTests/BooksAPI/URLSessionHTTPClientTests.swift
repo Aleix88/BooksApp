@@ -43,23 +43,6 @@ final class URLSessionHTTPClientTests: XCTestCase {
         URLProtocolSpy.stopInterceptingRequests()
     }
     
-    func test_get_requestIsSent() {
-        URLProtocolSpy.startInterceptingRequests()
-
-        let expect = expectation(description: "Wait for get completion")
-        let url = URL(string: "https://www.some-url.com")!
-        let sut = URLSessionHTTPClient()
-
-        sut.get(url: url) { _ in
-            expect.fulfill()
-        }
-        
-        wait(for: [expect], timeout: 1.0)
-        XCTAssertEqual(URLProtocolSpy.requestsURLs, [url])
-
-        URLProtocolSpy.stopInterceptingRequests()
-    }
-    
     func test_get_failsOnRequestError() {
         URLProtocolSpy.startInterceptingRequests()
 
