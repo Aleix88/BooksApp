@@ -52,6 +52,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E8583D782A80BE7200EB15C9 /* BooksSearcher */ = {
+			isa = PBXGroup;
+			children = (
+				E87756082A7B70E5004511E6 /* BookSearcher.swift */,
+				E87756042A7B6C47004511E6 /* Book.swift */,
+			);
+			path = BooksSearcher;
+			sourceTree = "<group>";
+		};
+		E8583D792A80BEA300EB15C9 /* BooksAPI */ = {
+			isa = PBXGroup;
+			children = (
+				E877560C2A7B7582004511E6 /* RemoteBookSearcher.swift */,
+			);
+			path = BooksAPI;
+			sourceTree = "<group>";
+		};
 		E8D7B2222A7A85A8003820D4 = {
 			isa = PBXGroup;
 			children = (
@@ -73,9 +90,8 @@
 		E8D7B22E2A7A85A9003820D4 /* ReadBooks */ = {
 			isa = PBXGroup;
 			children = (
-				E87756042A7B6C47004511E6 /* Book.swift */,
-				E87756082A7B70E5004511E6 /* BookSearcher.swift */,
-				E877560C2A7B7582004511E6 /* RemoteBookSearcher.swift */,
+				E8583D792A80BEA300EB15C9 /* BooksAPI */,
+				E8583D782A80BE7200EB15C9 /* BooksSearcher */,
 			);
 			path = ReadBooks;
 			sourceTree = "<group>";
