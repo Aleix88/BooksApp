@@ -39,8 +39,7 @@ public class RemoteBookSearcher {
         client.get(url: url) { result in
             switch result {
             case let .success(data, response):
-                let result = BooksDataMapper.map(data, response)
-                completion(result)
+                completion(BooksDataMapper.map(data, response))
             case .failure(_):
                 completion(.failure(.connectivity))
             }
