@@ -34,23 +34,23 @@ class URLSessionHTTPClient {
 final class URLSessionHTTPClientTests: XCTestCase {
 
     func test_init_noRequestIsSent() {
-        URLProtocolSpy.startInterceptingRequests()
+        URLProtocolStub.startInterceptingRequests()
         
         _ = URLSessionHTTPClient()
         
-        XCTAssertFalse(URLProtocolSpy.didHandleAnyRequest)
+        XCTAssertFalse(URLProtocolStub.didHandleAnyRequest)
         
-        URLProtocolSpy.stopInterceptingRequests()
+        URLProtocolStub.stopInterceptingRequests()
     }
     
     func test_get_failsOnRequestError() {
-        URLProtocolSpy.startInterceptingRequests()
+        URLProtocolStub.startInterceptingRequests()
 
         let expect = expectation(description: "Wait for get completion")
         let url = URL(string: "https://www.some-url.com")!
         let sut = URLSessionHTTPClient()
         let expectedError = NSError(domain: "", code: 0)
-        URLProtocolSpy.setStub(expectedError, for: url)
+        URLProtocolStub.setStub(expectedError, for: url)
 
         sut.get(url: url) { result in
             switch result {
@@ -65,11 +65,11 @@ final class URLSessionHTTPClientTests: XCTestCase {
 
         wait(for: [expect], timeout: 1.0)
 
-        URLProtocolSpy.stopInterceptingRequests()
+        URLProtocolStub.stopInterceptingRequests()
     }
 }
 
-class URLProtocolSpy: URLProtocol {
+class URLProtocolStub: URLProtocol {
     static var didHandleAnyRequest = false
     static var stubs = [URL: Error?]()
 
