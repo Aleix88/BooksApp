@@ -82,23 +82,12 @@ final class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_get_successOnReturnDataAndHTTPURLResponse() {
-        let expectation = expectation(description: "Wait for get completion")
         let expectedData = anyData()
         let expectedResponse = anyHTTPURLResponse()
-        URLProtocolStub.setStub(data: expectedData, response: expectedResponse, error: nil)
-
-        makeSUT().get(url: anyURL()) { result in
-            switch result {
-            case .success(let data, let response):
-                XCTAssertEqual(data, expectedData)
-                XCTAssertEqual(response.url, expectedResponse.url)
-                XCTAssertEqual(response.statusCode, expectedResponse.statusCode)
-            default: XCTFail("Expected to success and got \(result)")
-            }
-            expectation.fulfill()
-        }
-
-        wait(for: [expectation], timeout: 1.0)
+        let (data, response) = resultDataAndResponseFor(data: expectedData, response: expectedResponse, error: nil)
+        XCTAssertEqual(data, data)
+        XCTAssertEqual(response.url, expectedResponse.url)
+        XCTAssertEqual(response.statusCode, expectedResponse.statusCode)
     }
     
     // MARK: Helpers
@@ -152,6 +141,30 @@ final class URLSessionHTTPClientTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
 
         return receivedError
+    }
+    
+    func resultDataAndResponseFor(
+        data: Data?,
+        response: URLResponse?,
+        error: Error?,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> (Data, HTTPURLResponse) {
+        let expectation = expectation(description: "Wait for get completion")
+        URLProtocolStub.setStub(data: data, response: response, error: error)
+        
+        var receivedValues: (Data, HTTPURLResponse)!
+        makeSUT().get(url: anyURL()) { result in
+            switch result {
+            case .success(let resultData, let resultResponse):
+                receivedValues = (resultData, resultResponse)
+            default: XCTFail("Expected to success and got \(result)")
+            }
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 1.0)
+        return receivedValues
     }
 }
 
