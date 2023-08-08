@@ -61,7 +61,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     func test_get_failsOnRequestError() {
         let expect = expectation(description: "Wait for get completion")
         let expectedError = NSError(domain: "", code: 0)
-        URLProtocolStub.setStub(expectedError)
+        URLProtocolStub.setStub(data: nil, response: nil, error: expectedError)
 
         makeSUT().get(url: anyURL()) { result in
             switch result {
@@ -92,10 +92,20 @@ final class URLSessionHTTPClientTests: XCTestCase {
 class URLProtocolStub: URLProtocol {
     static var didHandleAnyRequest = false
     static private var requestsObserver: ((URLRequest) -> Void)?
-    static private var stub: Error?
+    static private var stub: Stub?
+    
+    private struct Stub {
+        let data: Data?
+        let response: URLResponse?
+        let error: Error?
+    }
 
-    static func setStub(_ error: Error) {
-        stub = error
+    static func setStub(
+        data: Data?,
+        response: URLResponse?,
+        error: Error?
+    ) {
+        stub = Stub(data: data, response: response, error: error)
     }
     
     static func observeRequests(observer: @escaping (URLRequest) -> Void) {
@@ -124,7 +134,15 @@ class URLProtocolStub: URLProtocol {
     }
     
     override func startLoading() {
-        if let error = Self.stub {
+        if let data = Self.stub?.data {
+            client?.urlProtocol(self, didLoad: data)
+        }
+        
+        if let response = Self.stub?.response {
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        }
+        
+        if let error = Self.stub?.error {
             client?.urlProtocol(self, didFailWithError: error)
         }
         
