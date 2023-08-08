@@ -138,11 +138,15 @@ final class RemoteBookSearcherTests: XCTestCase {
 
     // MARK: Helpers
     
-    func makeSut(urlFactory: SearchURLAbstractFactory = SearchURLFactoryMock()) -> (RemoteBookSearcher, HTTPClientSpy) {
+    func makeSut(
+        urlFactory: SearchURLAbstractFactory = SearchURLFactoryMock(),
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> (RemoteBookSearcher, HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteBookSearcher(client: client, urlFactory: urlFactory)
-        trackMemoryLeaks(for: sut)
-        trackMemoryLeaks(for: client)
+        trackMemoryLeaks(for: sut, file: file, line: line)
+        trackMemoryLeaks(for: client, file: file, line: line)
         return (sut, client)
     }
     
