@@ -67,14 +67,38 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertEqual((error as? NSError)?.code, expectedError.code)
     }
     
-    func test_get_failsOnAllNilValues() {
-        let error = resultErrorFor(data: nil, response: nil, error: nil)
-        XCTAssertNotNil(error)
+    func test_get_failsOnUnrepresentableResponseValues() {
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyURLResponse(), error: nil))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTPURLResponse(), error: nil))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: nil, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: nil, error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTPURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyHTTPURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyURLResponse(), error: nil))
     }
     
     // MARK: Helpers
     func anyURL() -> URL {
         URL(string: "https://www.some-url.com")!
+    }
+    
+    func anyURLResponse() -> URLResponse {
+        URLResponse(url: anyURL(), mimeType: "", expectedContentLength: 100, textEncodingName: "")
+    }
+    
+    func anyHTTPURLResponse() -> HTTPURLResponse {
+        HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: [:])!
+    }
+    
+    func anyData() -> Data {
+        Data("Any data".utf8)
+    }
+    
+    func anyNSError() -> NSError {
+        NSError(domain: "", code: 0)
     }
     
     func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHTTPClient {
