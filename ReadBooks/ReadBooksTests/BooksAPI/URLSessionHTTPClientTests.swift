@@ -19,9 +19,11 @@ class URLSessionHTTPClient {
     
     func get(url: URL, completion: @escaping (HTTPClientResult) -> Void) {
         let request = URLRequest(url: url)
-        session.dataTask(with: request) { _, _, error in
+        session.dataTask(with: request) { data, response, error in
             if let error {
                 completion(.failure(error))
+            } else if let data, let response = response as? HTTPURLResponse {
+                completion(.success(data, response))
             } else {
                 completion(.failure(UnexpectedValuesRepresentation()))
             }
@@ -70,7 +72,6 @@ final class URLSessionHTTPClientTests: XCTestCase {
     func test_get_failsOnUnrepresentableResponseValues() {
         XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
         XCTAssertNotNil(resultErrorFor(data: nil, response: anyURLResponse(), error: nil))
-        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTPURLResponse(), error: nil))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nil, error: nil))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nil, error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: nil, response: anyURLResponse(), error: anyNSError()))
@@ -78,6 +79,26 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyURLResponse(), error: nil))
+    }
+    
+    func test_get_successOnReturnDataAndHTTPURLResponse() {
+        let expectation = expectation(description: "Wait for get completion")
+        let expectedData = anyData()
+        let expectedResponse = anyHTTPURLResponse()
+        URLProtocolStub.setStub(data: expectedData, response: expectedResponse, error: nil)
+
+        makeSUT().get(url: anyURL()) { result in
+            switch result {
+            case .success(let data, let response):
+                XCTAssertEqual(data, expectedData)
+                XCTAssertEqual(response.url, expectedResponse.url)
+                XCTAssertEqual(response.statusCode, expectedResponse.statusCode)
+            default: XCTFail("Expected to success and got \(result)")
+            }
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 1.0)
     }
     
     // MARK: Helpers
