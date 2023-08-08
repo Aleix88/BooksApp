@@ -67,7 +67,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
 
 class URLProtocolStub: URLProtocol {
     static var didHandleAnyRequest = false
-    static var stub: Error?
+    static private var stub: Error?
 
     static func setStub(_ error: Error) {
         stub = error
