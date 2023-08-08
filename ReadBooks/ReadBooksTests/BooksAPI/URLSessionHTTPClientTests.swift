@@ -5,10 +5,6 @@
 //  Created by Aleix Diaz Baggerman on 7/8/23.
 //
 
-//public protocol HTTPClient {
-//    func get(url: URL, completion: @escaping (HTTPClientResult) -> Void)
-//}
-
 import XCTest
 import ReadBooks
 
