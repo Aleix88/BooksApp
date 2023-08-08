@@ -90,6 +90,15 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertEqual(result?.response.statusCode, expectedResponse.statusCode)
     }
     
+    func test_get_successOnReturnEmptyDataAndHTTPURLResponse() {
+        let emptyData = Data()
+        let expectedResponse = anyHTTPURLResponse()
+        let result = resultDataAndResponseFor(data: emptyData, response: expectedResponse, error: nil)
+        XCTAssertEqual(result?.data, emptyData)
+        XCTAssertEqual(result?.response.url, expectedResponse.url)
+        XCTAssertEqual(result?.response.statusCode, expectedResponse.statusCode)
+    }
+    
     // MARK: Helpers
     func anyURL() -> URL {
         URL(string: "https://www.some-url.com")!
