@@ -142,6 +142,7 @@ final class RemoteBookSearcherTests: XCTestCase {
         let client = HTTPClientSpy()
         let sut = RemoteBookSearcher(client: client, urlFactory: urlFactory)
         trackMemoryLeaks(for: sut)
+        trackMemoryLeaks(for: client)
         return (sut, client)
     }
     
