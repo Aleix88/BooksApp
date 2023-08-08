@@ -11,6 +11,7 @@
 		E8583D802A80BF4000EB15C9 /* SearchURLAbstractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D7F2A80BF4000EB15C9 /* SearchURLAbstractFactory.swift */; };
 		E8583D822A80BF7B00EB15C9 /* BookDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D812A80BF7B00EB15C9 /* BookDataMapper.swift */; };
 		E8583D872A81055600EB15C9 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D862A81055600EB15C9 /* URLSessionHTTPClientTests.swift */; };
+		E8583D8A2A82339700EB15C9 /* XCTestCase+MemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D892A82339700EB15C9 /* XCTestCase+MemoryLeaks.swift */; };
 		E87756052A7B6C47004511E6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756042A7B6C47004511E6 /* Book.swift */; };
 		E87756092A7B70E5004511E6 /* BookSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756082A7B70E5004511E6 /* BookSearcher.swift */; };
 		E877560B2A7B71BF004511E6 /* RemoteBookSearcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */; };
@@ -33,6 +34,7 @@
 		E8583D7F2A80BF4000EB15C9 /* SearchURLAbstractFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchURLAbstractFactory.swift; sourceTree = "<group>"; };
 		E8583D812A80BF7B00EB15C9 /* BookDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDataMapper.swift; sourceTree = "<group>"; };
 		E8583D862A81055600EB15C9 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
+		E8583D892A82339700EB15C9 /* XCTestCase+MemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeaks.swift"; sourceTree = "<group>"; };
 		E87756042A7B6C47004511E6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		E87756082A7B70E5004511E6 /* BookSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearcher.swift; sourceTree = "<group>"; };
 		E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteBookSearcherTests.swift; sourceTree = "<group>"; };
@@ -83,10 +85,19 @@
 		E8583D832A80C00500EB15C9 /* BooksAPI */ = {
 			isa = PBXGroup;
 			children = (
+				E8583D882A82338600EB15C9 /* Helpers */,
 				E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */,
 				E8583D862A81055600EB15C9 /* URLSessionHTTPClientTests.swift */,
 			);
 			path = BooksAPI;
+			sourceTree = "<group>";
+		};
+		E8583D882A82338600EB15C9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E8583D892A82339700EB15C9 /* XCTestCase+MemoryLeaks.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		E8D7B2222A7A85A8003820D4 = {
@@ -249,6 +260,7 @@
 			files = (
 				E877560B2A7B71BF004511E6 /* RemoteBookSearcherTests.swift in Sources */,
 				E8583D872A81055600EB15C9 /* URLSessionHTTPClientTests.swift in Sources */,
+				E8583D8A2A82339700EB15C9 /* XCTestCase+MemoryLeaks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
