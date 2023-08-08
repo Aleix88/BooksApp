@@ -17,13 +17,13 @@ class NilSearchURLFactoryStub: SearchURLAbstractFactory {
 final class RemoteBookSearcherTests: XCTestCase {
 
     func test_init_noRequestIsSent() {
-        let (_, client) = makeSut()
+        let (_, client) = makeSUT()
         
         XCTAssertEqual(client.requestedURLs, [])
     }
     
     func test_onSearch_withInvalidInput_noRequestIsSentAndFailsWithInvalidInput() {
-        let (sut, client) = makeSut()
+        let (sut, client) = makeSUT()
         
         expect(sut, withInput: "", toCompleteWith: failure(.invalidInput))
         expect(sut, withInput: "    ", toCompleteWith: failure(.invalidInput))
@@ -33,7 +33,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     
     func test_onSearch_requestIsSent() {
         let urlFactory = SearchURLFactoryMock()
-        let (sut, client) = makeSut(urlFactory: urlFactory)
+        let (sut, client) = makeSUT(urlFactory: urlFactory)
         
         sut.search(input: "Some book name") { _ in }
         sut.search(input: "Another book name") { _ in }
@@ -44,7 +44,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     
     func test_onSearch_inputIsInjectedToURLFactory() {
         let urlFactory = SearchURLFactoryMock()
-        let (sut, _) = makeSut(urlFactory: urlFactory)
+        let (sut, _) = makeSUT(urlFactory: urlFactory)
         
         sut.search(input: "Some book name") { _ in }
         
@@ -53,7 +53,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     
     func test_onSearch_withNilURLFromFactory_noRequestIsSent() {
         let urlFactory = NilSearchURLFactoryStub()
-        let (sut, client) = makeSut(urlFactory: urlFactory)
+        let (sut, client) = makeSUT(urlFactory: urlFactory)
         
         sut.search(input: "Some book name") { _ in }
         
@@ -61,7 +61,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
     
     func test_onSearch_deliversErrorOnClientError() {
-        let (sut, client) = makeSut()
+        let (sut, client) = makeSUT()
         
         expect(sut, toCompleteWith: failure(.connectivity)) {
             client.completeWithError()
@@ -69,7 +69,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
     
     func test_onSearch_withStatusCodeNot200_deliversInvalidDataError() {
-        let (sut, client) = makeSut()
+        let (sut, client) = makeSUT()
         let samples = [199, 201, 300, 400, 500]
         let validJson = makeBooksJSON()
 
@@ -85,7 +85,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
     
     func test_onSearch_withStatusCode200AndInvalidJson_deliversInvalidDataError() {
-        let (sut, client) = makeSut()
+        let (sut, client) = makeSUT()
         let invalidJson = Data("Invalid json".utf8)
         
         expect(sut, toCompleteWith: failure(.invalidData)) {
@@ -94,7 +94,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
 
     func test_onSearch_withStatusCode200AndValidJson_deliversEmptyArray() {
-        let (sut, client) = makeSut()
+        let (sut, client) = makeSUT()
         let validJson = makeBooksJSON()
 
         expect(sut, toCompleteWith: .success([])) {
@@ -103,7 +103,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
     
     func test_onSearch_withStatusCode200AndJsonWithBooks_deliversBooks() {
-        let (sut, client) = makeSut()
+        let (sut, client) = makeSUT()
         let book1 = Book(
             id: UUID(),
             name: "Book 1",
@@ -124,7 +124,7 @@ final class RemoteBookSearcherTests: XCTestCase {
     }
     
     func test_onSearch_whenSutDeallocates_completionIsNotCalled() {
-        var (sut, client): (RemoteBookSearcher?, HTTPClientSpy) = makeSut()
+        var (sut, client): (RemoteBookSearcher?, HTTPClientSpy) = makeSUT()
         
         var didCallCompletion = false
         sut?.search(input: "Some book name", completion: { _ in
@@ -138,7 +138,7 @@ final class RemoteBookSearcherTests: XCTestCase {
 
     // MARK: Helpers
     
-    func makeSut(
+    func makeSUT(
         urlFactory: SearchURLAbstractFactory = SearchURLFactoryMock(),
         file: StaticString = #filePath,
         line: UInt = #line
