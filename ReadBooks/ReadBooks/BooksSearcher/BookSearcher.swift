@@ -12,6 +12,6 @@ public enum BookSearchResult{
     case failure(Error)
 }
 
-protocol BookSearcher {
+public protocol BookSearcher {
     func search(input: String, completion: @escaping (BookSearchResult) -> Void)
 }
