@@ -6,3 +6,10 @@ workflows:
             script: xcodebuild clean build test -project ReadBooks/ReadBooks.xcodeproj -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGN_REQUIRED=NO
         max_build_duration: 120
         instance_type: mac_mini_m1
+        triggering:
+          events:
+            - push
+          branch_patterns:
+            - pattern: '*'
+              include: true
+              source: true
