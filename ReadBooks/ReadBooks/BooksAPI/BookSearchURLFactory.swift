@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class BookSearchURLFactory {
+public final class BookSearchURLFactory: SearchURLAbstractFactory {
     private let baseURL: URL
     
     public init(baseURL: URL) {
