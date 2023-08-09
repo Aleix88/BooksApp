@@ -11,19 +11,14 @@ import ReadBooks
 final class ReadBooksEndToEndTests: XCTestCase {
 
     func test_search_successWithBooks() {
-        let expectedBooks = expectedBooks()
-        let expectation = expectation(description: "Wait for search completion")
-        makeSUT().search(input: "Some input") { result in
-            switch result {
-            case .success(let books):
-                XCTAssertEqual(books, expectedBooks)
-            default:
-                XCTFail("Expection success and got \(result)")
-            }
-            expectation.fulfill()
+        switch searchResult() {
+        case .success(let books)?:
+            XCTAssertEqual(books, expectedBooks())
+        case .failure(let error)?:
+            XCTFail("Expected success and got failure with \(error)")
+        default:
+            XCTFail("Expection success and got no result")
         }
-        
-        wait(for: [expectation], timeout: 10.0)
     }
     
     // MARK: Helpers
@@ -33,6 +28,20 @@ final class ReadBooksEndToEndTests: XCTestCase {
         let urlFactory = BookSearchURLFactory(baseURL: baseURL)
         let client = URLSessionHTTPClient()
         return RemoteBookSearcher(client: client, urlFactory: urlFactory)
+    }
+    
+    private func searchResult() -> BookSearchResult? {
+        let expectation = expectation(description: "Wait for search completion")
+        
+        var receivedResult: BookSearchResult?
+        makeSUT().search(input: "Some input") { result in
+            receivedResult = result
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 10.0)
+        
+        return receivedResult
     }
 
     private func expectedBooks() -> [Book] {
