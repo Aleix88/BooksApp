@@ -6,21 +6,7 @@
 //
 
 import XCTest
-
-class BookSearchURLFactory {
-    let baseURL: URL
-    
-    init(baseURL: URL) {
-        self.baseURL = baseURL
-    }
-    
-    func create(input: String) -> URL? {
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        urlComponents?.path = "/books"
-        urlComponents?.queryItems = [URLQueryItem(name: "q", value: input)]
-        return urlComponents?.url
-    }
-}
+import ReadBooks
 
 final class BookSearchURLFactoryTests: XCTestCase {
 
