@@ -18,6 +18,8 @@ final class BookSearchURLFactoryTests: XCTestCase {
     func test_create_returnsNilWithInvalidInput() {
         let sut = BookSearchURLFactory()
         XCTAssertNil(sut.create(input: ""))
+        XCTAssertNil(sut.create(input: "    "))
+        XCTAssertNil(sut.create(input: "\n\n\n"))
     }
 
 }
