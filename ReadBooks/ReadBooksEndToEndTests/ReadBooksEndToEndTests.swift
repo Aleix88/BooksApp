@@ -32,9 +32,10 @@ final class ReadBooksEndToEndTests: XCTestCase {
     
     private func searchResult() -> BookSearchResult? {
         let expectation = expectation(description: "Wait for search completion")
+        let bookSearcher = makeSUT()
         
         var receivedResult: BookSearchResult?
-        makeSUT().search(input: "Some input") { result in
+        bookSearcher.search(input: "Some input") { result in
             receivedResult = result
             expectation.fulfill()
         }
