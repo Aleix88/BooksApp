@@ -15,6 +15,8 @@
 		E8583D8C2A826C3E00EB15C9 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D8B2A826C3E00EB15C9 /* URLSessionHTTPClient.swift */; };
 		E8583D9E2A835E4B00EB15C9 /* BookSearchURLFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D9D2A835E4B00EB15C9 /* BookSearchURLFactoryTests.swift */; };
 		E8583DA02A83691E00EB15C9 /* BookSearchURLFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D9F2A83691E00EB15C9 /* BookSearchURLFactory.swift */; };
+		E8583DA82A836C8700EB15C9 /* ReadBooksEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583DA72A836C8700EB15C9 /* ReadBooksEndToEndTests.swift */; };
+		E8583DA92A836C8700EB15C9 /* ReadBooks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8D7B22C2A7A85A9003820D4 /* ReadBooks.framework */; };
 		E87756052A7B6C47004511E6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756042A7B6C47004511E6 /* Book.swift */; };
 		E87756092A7B70E5004511E6 /* BookSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756082A7B70E5004511E6 /* BookSearcher.swift */; };
 		E877560B2A7B71BF004511E6 /* RemoteBookSearcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */; };
@@ -23,6 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E8583DAA2A836C8700EB15C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E8D7B2232A7A85A9003820D4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E8D7B22B2A7A85A9003820D4;
+			remoteInfo = ReadBooks;
+		};
 		E8D7B2382A7A85A9003820D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E8D7B2232A7A85A9003820D4 /* Project object */;
@@ -41,6 +50,8 @@
 		E8583D8B2A826C3E00EB15C9 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		E8583D9D2A835E4B00EB15C9 /* BookSearchURLFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearchURLFactoryTests.swift; sourceTree = "<group>"; };
 		E8583D9F2A83691E00EB15C9 /* BookSearchURLFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearchURLFactory.swift; sourceTree = "<group>"; };
+		E8583DA52A836C8700EB15C9 /* ReadBooksEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReadBooksEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8583DA72A836C8700EB15C9 /* ReadBooksEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBooksEndToEndTests.swift; sourceTree = "<group>"; };
 		E87756042A7B6C47004511E6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		E87756082A7B70E5004511E6 /* BookSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearcher.swift; sourceTree = "<group>"; };
 		E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteBookSearcherTests.swift; sourceTree = "<group>"; };
@@ -50,6 +61,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E8583DA22A836C8700EB15C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8583DA92A836C8700EB15C9 /* ReadBooks.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E8D7B2292A7A85A9003820D4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -109,11 +128,20 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		E8583DA62A836C8700EB15C9 /* ReadBooksEndToEndTests */ = {
+			isa = PBXGroup;
+			children = (
+				E8583DA72A836C8700EB15C9 /* ReadBooksEndToEndTests.swift */,
+			);
+			path = ReadBooksEndToEndTests;
+			sourceTree = "<group>";
+		};
 		E8D7B2222A7A85A8003820D4 = {
 			isa = PBXGroup;
 			children = (
 				E8D7B22E2A7A85A9003820D4 /* ReadBooks */,
 				E8D7B23A2A7A85A9003820D4 /* ReadBooksTests */,
+				E8583DA62A836C8700EB15C9 /* ReadBooksEndToEndTests */,
 				E8D7B22D2A7A85A9003820D4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -123,6 +151,7 @@
 			children = (
 				E8D7B22C2A7A85A9003820D4 /* ReadBooks.framework */,
 				E8D7B2362A7A85A9003820D4 /* ReadBooksTests.xctest */,
+				E8583DA52A836C8700EB15C9 /* ReadBooksEndToEndTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,6 +186,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		E8583DA42A836C8700EB15C9 /* ReadBooksEndToEndTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E8583DAC2A836C8700EB15C9 /* Build configuration list for PBXNativeTarget "ReadBooksEndToEndTests" */;
+			buildPhases = (
+				E8583DA12A836C8700EB15C9 /* Sources */,
+				E8583DA22A836C8700EB15C9 /* Frameworks */,
+				E8583DA32A836C8700EB15C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E8583DAB2A836C8700EB15C9 /* PBXTargetDependency */,
+			);
+			name = ReadBooksEndToEndTests;
+			productName = ReadBooksEndToEndTests;
+			productReference = E8583DA52A836C8700EB15C9 /* ReadBooksEndToEndTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E8D7B22B2A7A85A9003820D4 /* ReadBooks */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8D7B2402A7A85A9003820D4 /* Build configuration list for PBXNativeTarget "ReadBooks" */;
@@ -203,6 +250,9 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					E8583DA42A836C8700EB15C9 = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					E8D7B22B2A7A85A9003820D4 = {
 						CreatedOnToolsVersion = 14.2;
 						LastSwiftMigration = 1420;
@@ -228,11 +278,19 @@
 			targets = (
 				E8D7B22B2A7A85A9003820D4 /* ReadBooks */,
 				E8D7B2352A7A85A9003820D4 /* ReadBooksTests */,
+				E8583DA42A836C8700EB15C9 /* ReadBooksEndToEndTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E8583DA32A836C8700EB15C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E8D7B22A2A7A85A9003820D4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -250,6 +308,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E8583DA12A836C8700EB15C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8583DA82A836C8700EB15C9 /* ReadBooksEndToEndTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E8D7B2282A7A85A9003820D4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -279,6 +345,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E8583DAB2A836C8700EB15C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E8D7B22B2A7A85A9003820D4 /* ReadBooks */;
+			targetProxy = E8583DAA2A836C8700EB15C9 /* PBXContainerItemProxy */;
+		};
 		E8D7B2392A7A85A9003820D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E8D7B22B2A7A85A9003820D4 /* ReadBooks */;
@@ -287,6 +358,34 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		E8583DAD2A836C8700EB15C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = aleix.ReadBooksEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E8583DAE2A836C8700EB15C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = aleix.ReadBooksEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		E8D7B23E2A7A85A9003820D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -509,6 +608,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E8583DAC2A836C8700EB15C9 /* Build configuration list for PBXNativeTarget "ReadBooksEndToEndTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8583DAD2A836C8700EB15C9 /* Debug */,
+				E8583DAE2A836C8700EB15C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E8D7B2262A7A85A9003820D4 /* Build configuration list for PBXProject "ReadBooks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
