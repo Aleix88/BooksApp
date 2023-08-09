@@ -13,11 +13,7 @@ final class ReadBooksEndToEndTests: XCTestCase {
     func test_search_successWithBooks() {
         let expectedBooks = expectedBooks()
         let expectation = expectation(description: "Wait for search completion")
-        let baseURL = URL(string: "https://dev-q81384830o46004.api.raw-labs.com")!
-        let urlFactory = BookSearchURLFactory(baseURL: baseURL)
-        let client = URLSessionHTTPClient()
-        let bookSearcher = RemoteBookSearcher(client: client, urlFactory: urlFactory)
-        bookSearcher.search(input: "Some input") { result in
+        makeSUT().search(input: "Some input") { result in
             switch result {
             case .success(let books):
                 XCTAssertEqual(books, expectedBooks)
@@ -28,6 +24,13 @@ final class ReadBooksEndToEndTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 10.0)
+    }
+    
+    private func makeSUT() -> BookSearcher {
+        let baseURL = URL(string: "https://dev-q81384830o46004.api.raw-labs.com")!
+        let urlFactory = BookSearchURLFactory(baseURL: baseURL)
+        let client = URLSessionHTTPClient()
+        return RemoteBookSearcher(client: client, urlFactory: urlFactory)
     }
 
     private func expectedBooks() -> [Book] {
