@@ -23,16 +23,17 @@ final class ReadBooksEndToEndTests: XCTestCase {
     
     // MARK: Helpers
     
-    private func makeSUT() -> BookSearcher {
+    private func makeBookSearcher() -> BookSearcher {
         let baseURL = URL(string: "https://dev-q81384830o46004.api.raw-labs.com")!
         let urlFactory = BookSearchURLFactory(baseURL: baseURL)
         let client = URLSessionHTTPClient()
-        return RemoteBookSearcher(client: client, urlFactory: urlFactory)
+        let bookSearcher = RemoteBookSearcher(client: client, urlFactory: urlFactory)
+        return bookSearcher
     }
     
     private func searchResult() -> BookSearchResult? {
         let expectation = expectation(description: "Wait for search completion")
-        let bookSearcher = makeSUT()
+        let bookSearcher = makeBookSearcher()
         
         var receivedResult: BookSearchResult?
         bookSearcher.search(input: "Some input") { result in
