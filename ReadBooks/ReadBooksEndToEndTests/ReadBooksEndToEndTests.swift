@@ -11,7 +11,27 @@ import ReadBooks
 final class ReadBooksEndToEndTests: XCTestCase {
 
     func test_search_successWithBooks() {
-        let expectedBooks = [
+        let expectedBooks = expectedBooks()
+        let expectation = expectation(description: "Wait for search completion")
+        let baseURL = URL(string: "https://dev-q81384830o46004.api.raw-labs.com")!
+        let urlFactory = BookSearchURLFactory(baseURL: baseURL)
+        let client = URLSessionHTTPClient()
+        let bookSearcher = RemoteBookSearcher(client: client, urlFactory: urlFactory)
+        bookSearcher.search(input: "Some input") { result in
+            switch result {
+            case .success(let books):
+                XCTAssertEqual(books, expectedBooks)
+            default:
+                XCTFail("Expection success and got \(result)")
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 10.0)
+    }
+
+    private func expectedBooks() -> [Book] {
+        [
             Book(
                 id: UUID(uuidString: "a4a20aee-d2bb-4870-9f72-6353389889d4")!,
                 name: "El imperio final",
@@ -31,23 +51,5 @@ final class ReadBooksEndToEndTests: XCTestCase {
                 imageURL: nil
             )
         ]
-        
-        let expectation = expectation(description: "Wait for search completion")
-        let baseURL = URL(string: "https://dev-q81384830o46004.api.raw-labs.com")!
-        let urlFactory = BookSearchURLFactory(baseURL: baseURL)
-        let client = URLSessionHTTPClient()
-        let bookSearcher = RemoteBookSearcher(client: client, urlFactory: urlFactory)
-        bookSearcher.search(input: "Some input") { result in
-            switch result {
-            case .success(let books):
-                XCTAssertEqual(books, expectedBooks)
-            default:
-                XCTFail("Expection success and got \(result)")
-            }
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 10.0)
     }
-
 }
