@@ -8,6 +8,12 @@
 import XCTest
 
 class BookSearchURLFactory {
+    let baseURL: URL
+    
+    init(baseURL: URL) {
+        self.baseURL = baseURL
+    }
+    
     func create(input: String) -> URL? {
         return nil
     }
@@ -16,7 +22,7 @@ class BookSearchURLFactory {
 final class BookSearchURLFactoryTests: XCTestCase {
 
     func test_create_returnsNilWithInvalidInput() {
-        let sut = BookSearchURLFactory()
+        let sut = BookSearchURLFactory(baseURL: URL(string: "https://www.somebaseurl.com")!)
         XCTAssertNil(sut.create(input: ""))
         XCTAssertNil(sut.create(input: "    "))
         XCTAssertNil(sut.create(input: "\n\n\n"))
