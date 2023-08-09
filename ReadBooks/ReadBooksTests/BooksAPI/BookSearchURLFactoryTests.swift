@@ -37,7 +37,7 @@ final class BookSearchURLFactoryTests: XCTestCase {
 
     func test_create_returnsURLWithValidInput() {
         let sut = BookSearchURLFactory(baseURL: baseURL())
-        XCTAssertEqual(sut.create(input: "Input"), URL(string: "https://www.somebaseurl.com/books?q=Input"))
+        XCTAssertEqual(sut.create(input: "Input"), searchURL(withInput: "Input"))
     }
     
     // MARK: Helpers
@@ -45,7 +45,7 @@ final class BookSearchURLFactoryTests: XCTestCase {
         URL(string: "https://www.somebaseurl.com")!
     }
     
-//    private func anyURL(withInput input: String) -> URL {
-//        URL(string: anyURL().absoluteString + "/books?q=\(input)")!
-//    }
+    private func searchURL(withInput input: String) -> URL {
+        URL(string: baseURL().absoluteString + "/books?q=\(input)")!
+    }
 }
