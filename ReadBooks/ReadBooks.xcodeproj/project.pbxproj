@@ -13,6 +13,7 @@
 		E8583D872A81055600EB15C9 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D862A81055600EB15C9 /* URLSessionHTTPClientTests.swift */; };
 		E8583D8A2A82339700EB15C9 /* XCTestCase+MemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D892A82339700EB15C9 /* XCTestCase+MemoryLeaks.swift */; };
 		E8583D8C2A826C3E00EB15C9 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D8B2A826C3E00EB15C9 /* URLSessionHTTPClient.swift */; };
+		E8583D9E2A835E4B00EB15C9 /* BookSearchURLFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8583D9D2A835E4B00EB15C9 /* BookSearchURLFactoryTests.swift */; };
 		E87756052A7B6C47004511E6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756042A7B6C47004511E6 /* Book.swift */; };
 		E87756092A7B70E5004511E6 /* BookSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87756082A7B70E5004511E6 /* BookSearcher.swift */; };
 		E877560B2A7B71BF004511E6 /* RemoteBookSearcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */; };
@@ -37,6 +38,7 @@
 		E8583D862A81055600EB15C9 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		E8583D892A82339700EB15C9 /* XCTestCase+MemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeaks.swift"; sourceTree = "<group>"; };
 		E8583D8B2A826C3E00EB15C9 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		E8583D9D2A835E4B00EB15C9 /* BookSearchURLFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearchURLFactoryTests.swift; sourceTree = "<group>"; };
 		E87756042A7B6C47004511E6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		E87756082A7B70E5004511E6 /* BookSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearcher.swift; sourceTree = "<group>"; };
 		E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteBookSearcherTests.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				E8583D882A82338600EB15C9 /* Helpers */,
 				E877560A2A7B71BF004511E6 /* RemoteBookSearcherTests.swift */,
 				E8583D862A81055600EB15C9 /* URLSessionHTTPClientTests.swift */,
+				E8583D9D2A835E4B00EB15C9 /* BookSearchURLFactoryTests.swift */,
 			);
 			path = BooksAPI;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E877560B2A7B71BF004511E6 /* RemoteBookSearcherTests.swift in Sources */,
+				E8583D9E2A835E4B00EB15C9 /* BookSearchURLFactoryTests.swift in Sources */,
 				E8583D872A81055600EB15C9 /* URLSessionHTTPClientTests.swift in Sources */,
 				E8583D8A2A82339700EB15C9 /* XCTestCase+MemoryLeaks.swift in Sources */,
 			);
