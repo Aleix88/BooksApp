@@ -1,5 +1,8 @@
 # BooksApp
-##CI/CD
+
+[![Codemagic build status](https://api.codemagic.io/apps/64d33f7e377a613f2731903f/readbooks-workflow/status_badge.svg)
+
+## CI/CD
 
 This project is configured to run test with every push (using Codemagic.io)
 
