@@ -1,4 +1,8 @@
 # BooksApp
+##CI/CD
+
+This project is configured to run test with every push (using Codemagic.io)
+
 ## Requirements and Specs
 ### User Stories
 **Narrative #1**
