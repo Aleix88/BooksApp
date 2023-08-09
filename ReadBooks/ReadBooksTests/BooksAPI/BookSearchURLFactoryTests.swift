@@ -22,7 +22,9 @@ final class BookSearchURLFactoryTests: XCTestCase {
     
     // MARK: Helpers
     private func makeSUT() -> SearchURLAbstractFactory {
-        BookSearchURLFactory(baseURL: baseURL())
+        let sut = BookSearchURLFactory(baseURL: baseURL())
+        trackMemoryLeaks(for: sut)
+        return sut
     }
     
     private func baseURL() -> URL {
