@@ -15,7 +15,14 @@ class BookSearchURLFactory {
     }
     
     func create(input: String) -> URL? {
-        return nil
+        guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return nil
+        }
+        
+        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        urlComponents?.path = "/books"
+        urlComponents?.queryItems = [URLQueryItem(name: "q", value: input)]
+        return urlComponents?.url
     }
 }
 
@@ -28,4 +35,9 @@ final class BookSearchURLFactoryTests: XCTestCase {
         XCTAssertNil(sut.create(input: "\n\n\n"))
     }
 
+    func test_create_returnsURLWithValidInput() {
+        let url = URL(string: "https://www.somebaseurl.com")!
+        let sut = BookSearchURLFactory(baseURL: url)
+        XCTAssertEqual(sut.create(input: "Input"), URL(string: "https://www.somebaseurl.com/books?q=Input"))
+    }
 }
