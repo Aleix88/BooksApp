@@ -26,6 +26,8 @@ final class ReadBooksEndToEndTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
     }
     
+    // MARK: Helpers
+    
     private func makeSUT() -> BookSearcher {
         let baseURL = URL(string: "https://dev-q81384830o46004.api.raw-labs.com")!
         let urlFactory = BookSearchURLFactory(baseURL: baseURL)
