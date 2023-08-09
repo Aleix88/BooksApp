@@ -28,6 +28,9 @@ final class ReadBooksEndToEndTests: XCTestCase {
         let urlFactory = BookSearchURLFactory(baseURL: baseURL)
         let client = URLSessionHTTPClient()
         let bookSearcher = RemoteBookSearcher(client: client, urlFactory: urlFactory)
+        trackMemoryLeaks(for: urlFactory)
+        trackMemoryLeaks(for: client)
+        trackMemoryLeaks(for: bookSearcher)
         return bookSearcher
     }
     
